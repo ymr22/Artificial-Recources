@@ -11,5 +11,6 @@ Yağmur Üstel - Nisa Nilay Demirci
 
 ### How to use:
 - git clone https://github.com/ymr22/Bil496.git
+- cd frontend
 - npm install
 - npm start
