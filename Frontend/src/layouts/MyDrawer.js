@@ -15,9 +15,7 @@ export default function MyDrawer() {
 
     const navigate = useNavigate();
     const [selectedComponent, setSelectedComponent] = useState(null);
-    const handleListItemClick = (component) => {
-        setSelectedComponent(component);
-        navigate(component === 'jobs' ? '/jobs' : '/'); // Navigate based on chosen component
+    const handleListItemClick = (component) => {// Navigate based on chosen component
     };
 
     return (
@@ -73,18 +71,6 @@ export default function MyDrawer() {
                     </List>
                 </Box>
             </Drawer>
-            <Box sx={{ display: 'flex', flexGrow: 1, mt: 5 }}>
-                <Container maxWidth="lg">
-                    {selectedComponent === 'jobs' && <JobList />}
-                    {selectedComponent === 'employers' && <EmployerList />}
-                    {selectedComponent === 'profile' && <ProfilePage />}
-                    {selectedComponent === null && (
-                        <Typography variant="h5" component="div">
-                            Welcome!
-                        </Typography>
-                    )}
-                </Container>
-            </Box>
         </div>
     );
 }

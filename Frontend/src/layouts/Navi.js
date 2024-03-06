@@ -30,25 +30,6 @@ export default function Navi() {
         setSelectedComponent(component);
         navigate(component === 'jobs' ? '/jobs' : '/'); // Navigate based on chosen component
     };
-    const handleSignOut = () => {
-        setIsAuthenticated(false);
-    };
-
-    const handleSignIn = () => {
-        setIsAuthenticated(true);
-    };
-
-    const handleToggle = () => {
-        setOpen(!open);
-    };
-
-    const handleDrawerOpen = () => {
-        setDrawerOpen(true);
-    };
-
-    const handleDrawerClose = () => {
-        setDrawerOpen(false);
-    };
 
     return (
         <div style={{ backgroundColor: 'white' }}>

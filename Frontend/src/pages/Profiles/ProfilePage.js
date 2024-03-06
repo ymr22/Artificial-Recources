@@ -1,114 +1,60 @@
-import { useTheme } from '@mui/material/styles';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { Container, Typography, TextField, Button, Avatar, Grid } from '@mui/material';
 
-import { Outlet } from 'react-router-dom';
-import {
-    Alert,
-    Snackbar,
-    Stack,
-    Typography,
-    useMediaQuery,
-} from '@mui/material';
-
-const styles = {
-    alertSucces: { backgroundColor: '#4CAF50', color: '#FFFFFF' },
-    alertError: { backgroundColor: '#E84C4C', color: '#FFFFFF' },
-};
-
-export default function ProfilPage (){
-    const [customer, setCustomer] = useState({
-        id: 'c1739ca9-9676-43e6-b08e-14e44e66a7f2',
-        lastName: '',
-        name: '',
-        email: '',
-        tel: '',
-        status: 'Actif',
-        skils: [{ id: 0, profession: 'Développeur', ability: [] }],
+const ProfilePage = () => {
+    // Kullanıcı bilgilerini state'de tutma
+    const [user, setUser] = useState({
+        firstName: "Ahmet",
+        email: "ahmet@example.com",
+        phone: "555-1234",
+        department: "IT",
+        workDuration: "2 yıl",
+        employeeId: "12345"
     });
 
-    const [alert, setAlert] = useState({
-        isOpen: false,
-        message: 'success',
-        error: false,
-    });
-
-    const theme = useTheme();
-
-    let isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-    const alertClose = () => {
-        setAlert({
-            isOpen: false,
-            message: '',
-            error: false,
-        });
-    };
-
-    const alertOpen = alertObj => {
-        setAlert({
-            isOpen: true,
-            message: alertObj?.message,
-            error: alertObj?.error,
-        });
+    // Form alanlarında değişiklik olduğunda user state'ini güncelle
+    const handleChange = (prop) => (event) => {
+        setUser({ ...user, [prop]: event.target.value });
     };
 
     return (
-        <Stack
-            sx={{
-                gap: '16px',
-                padding: '32px 24px',
-                backgroundColor: '#f1f4f6',
-                width: '100%',
-                minHeight: '100vh',
-                marginLeft: 15
-            }}
-        >
-            <Stack>
-                <Typography
-                    component={'h2'}
-                    sx={{
-                        fontFamily: 'RedHatBold',
-                        fontSize: '34px',
-                        lineHeight: 1.17,
-                        letterSpacing: '-0.2px',
-                        color: '#060506',
-                    }}
+        <Container component="main" maxWidth="sm">
+            <Typography component="h1" variant="h5">
+                Profil Bilgileri
+            </Typography>
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                {/* Kullanıcı profil resmi buraya eklenebilir */}
+            </Avatar>
+            <form>
+                <Grid container spacing={2}>
+                    {Object.keys(user).map((key, index) => (
+                        <Grid item xs={12} key={index}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id={key}
+                                label={key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1').trim()} // Convert camelCase to Regular Case
+                                name={key}
+                                autoComplete={key}
+                                value={user[key]}
+                                onChange={handleChange(key)}
+                            />
+                        </Grid>
+                    ))}
+                </Grid>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    sx={{ mt: 3, mb: 2 }}
                 >
-                    Profil
-                </Typography>
-                <Stack direction={!isMobile ? 'row' : 'column'}>
-                    <Typography
-                        color={'rgba(0, 0, 0, 0.38)'}
-                        component={'p'}
-                        fontFamily={'RedHatText'}
-                    >{`Employee Id :`}</Typography>
-                    <Typography fontFamily={'RedHatText'}>{customer.id}</Typography>
-                    <Typography
-                        color={'rgba(0, 0, 0, 0.38)'}
-                        component={'p'}
-                        fontFamily={'RedHatText'}
-                    >{`Employee Department :`}</Typography>
-                    <Typography fontFamily={'RedHatText'}>{customer.id}</Typography>
-                </Stack>
-            </Stack>
-            {alert?.isOpen && (
-                <Snackbar
-                    open={alert.isOpen}
-                    autoHideDuration={2000}
-                    onClose={alertClose}
-                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                >
-                    <Alert
-                        onClose={alertClose}
-                        icon={false}
-                        // severity="success"
-                        sx={!alert.error ? styles.alertSucces : styles.alertError}
-                    >
-                        {alert.message}
-                    </Alert>
-                </Snackbar>
-            )}
-            <Outlet />
-        </Stack>
+                    Bilgileri Güncelle
+                </Button>
+            </form>
+        </Container>
     );
-};
+}
+
+export default ProfilePage;
