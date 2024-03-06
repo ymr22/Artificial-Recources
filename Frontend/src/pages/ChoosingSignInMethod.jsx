@@ -1,17 +1,17 @@
 import React from 'react';
-import {Button, Header} from 'semantic-ui-react';
+import { Typography, ButtonGroup, Button } from '@mui/material';
 
 export default function ChoosingSignInMethod() {
-  return (
-    <div>
-      <Header as='h2' textAlign='center' class='ui white'>
-        Sign In As a ...
-      </Header>
-      <Button.Group widths='3' >
-        <Button>Job Seeker</Button>
-        <Button>Employer</Button>
-        <Button>System User</Button>
-      </Button.Group>
-    </div>
-  );
+    return (
+        <div>
+            <Typography variant="h5" align="center" sx={{ color: 'white' }}>
+                Sign In As a ...
+            </Typography>
+            <ButtonGroup fullWidth spacing={2}>
+                <Button variant="contained">Job Seeker</Button>
+                <Button variant="contained">Employer</Button>
+                <Button variant="contained">System User</Button>
+            </ButtonGroup>
+        </div>
+    );
 }

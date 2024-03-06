@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { CssBaseline } from "@mui/material";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
@@ -13,6 +13,7 @@ import ChoosingSignUpMethod from "./pages/ChoosingSignUpMethod";
 import EmployerSignUpPage from "./pages/Employers/EmployerSignUpPage";
 import SystemUserSignUpPage from "./pages/SystemUsers/SystemUserSignUpPage";
 import JobAddPage from "./pages/Employers/JobAddPage";
+import MyDrawer from "./layouts/MyDrawer";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -23,9 +24,13 @@ function App() {
       <CssBaseline />
       <Routes>
         <Route path="/login" element={<Login setAuth={setAuth} />} />
-        <Route path="/signup" element={<Signup setAuth={setAuth} />} />
         <Route path="/nextPage" element={<NextPage />}/>
-        <Route path="/employers" element={<EmployerList />}/>
+        <Route path="/employers" element={
+            <div>
+                <MyDrawer/>
+                <EmployerList />
+            </div>}/>
+        <Route exact path="/jobs" element={<JobList/>} />
         <Route path="/jobs/:jobId" element={<JobDetailPage />} />
         <Route path="/signIn" element={<ChoosingSignInMethod />} />
         <Route path="/signIn/Employer" element={<JobList/>} />

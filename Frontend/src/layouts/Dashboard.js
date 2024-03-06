@@ -28,7 +28,7 @@ export default function Dashboard() {
                 
             <Route exact path="/" component={MainPage} />
             <Route exact path="/home" component={MainPage} />
-            <Route exact path="/jobs" element={<JobList/>} />
+            <Route exact path="/jobs" element={JobList} />
             <Route exact path="/jobs/:jobId" component={JobDetailPage} />
             <Route path="/signIn" component={ChoosingSignInMethod} />
             <Route path="/signIn/Employer" component={JobList} />
