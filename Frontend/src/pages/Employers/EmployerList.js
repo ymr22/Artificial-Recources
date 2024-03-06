@@ -1,74 +1,78 @@
-import React, { useState } from 'react';
-import { Container, Typography, TextField, Button, Avatar, Grid, Box } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Paper,
+  Typography,
+  Button,
+  Link as MLink,
+  // other imports
+} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import EmployerService from '../../services/EmployerService';
 
-const ProfilePage = () => {
-  const [user, setUser] = useState({
-    firstName: "Ahmet",
-    email: "ahmet@example.com",
-    phone: "555-1234",
-    department: "IT",
-    workDuration: "2 yıl",
-    employeeId: "12345"
-  });
+export default function EmployerList() {
+  const [employers, setEmployers] = useState([{'companyName': "aaa", user:{'email': "kflsjdlkfj"}}]);
 
-  const handleChange = (prop) => (event) => {
-    setUser({ ...user, [prop]: event.target.value });
+  useEffect(() => {
+    let employerService = new EmployerService();
+
+    employerService.getEmployers().then((result) => setEmployers(result.data.data)).catch();
+  }, []);
+
+  const navigate = useNavigate();
+
+  const handleGoToInfos = (employerId) => {
+    navigate(`/employers/${employerId}`);
   };
 
   return (
-      <Container component="main" maxWidth="sm">
-        <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 56, height: 56 }}>
-            {/* Kullanıcı profil resmi buraya eklenebilir */}
-          </Avatar>
-          <Typography component="h1" variant="h5" sx={{ margin: (theme) => theme.spacing(1) }}>
-            Profil Bilgileri
-          </Typography>
-          <Box component="form" noValidate sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              {Object.keys(user).map((key, index) => (
-                  <Grid item xs={12} key={index}>
-                    <TextField
-                        variant="outlined"
-                        required
-                        fullWidth
-                        id={key}
-                        label={key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1').trim()}
-                        name={key}
-                        autoComplete={key}
-                        value={user[key]}
-                        onChange={handleChange(key)}
-                        sx={{
-                          '& .MuiInputBase-input': {
-                            borderRadius: 4,
-                            backgroundColor: 'background.paper',
-                            border: '1px solid #ced4da',
-                            fontSize: 16,
-                            padding: '10px 12px',
-                            transition: theme => theme.transitions.create(['border-color', 'box-shadow']),
-                            '&:focus': {
-                              boxShadow: `${theme => theme.palette.secondary.main} 0 0 0 0.2rem`,
-                              borderColor: theme => theme.palette.secondary.main,
-                            },
-                          },
-                        }}
-                    />
-                  </Grid>
+      <div>
+        <Typography variant="h4" component="h2" sx={{ p: 3, marginLeft: 30 }}>
+          Employer List:
+        </Typography>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 700, maxWidth: 1250, marginLeft: 35 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Company Name</TableCell>
+                <TableCell>Phone Number</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Joined Date</TableCell>
+                <TableCell>Calendar</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {employers.map((employer) => (
+                  <TableRow key={employer.id}>
+                    <TableCell>
+                      <Typography variant="body1" component="p">
+                        {employer.companyName}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>{employer.phone}</TableCell>
+                    <TableCell>{employer.user.email}</TableCell>
+                    <TableCell>{employer.user.createdDate}</TableCell>
+                    <TableCell>
+                      <Button
+                          variant="outlined"
+                          color="primary"
+                          component={MLink}
+                          to={`/employers/${employer.id}`}
+                          onClick={() => handleGoToInfos(employer.id)}
+                      >
+                        Go to infos
+                      </Button>
+                    </TableCell>
+                  </TableRow>
               ))}
-            </Grid>
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="secondary"
-                sx={{ mt: 3, mb: 2, py: 1.5, fontSize: '1rem' }}
-            >
-              Bilgileri Güncelle
-            </Button>
-          </Box>
-        </Box>
-      </Container>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
   );
 }
-
-export default ProfilePage;

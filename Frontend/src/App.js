@@ -27,8 +27,8 @@ function App() {
         <Route path="/nextPage" element={<NextPage />}/>
         <Route path="/employers" element={
             <div>
-                <MyDrawer/>
-                <EmployerList />
+              <MyDrawer/>
+              <EmployerList />
             </div>}/>
         <Route path="/profile" element={
             <div>

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Typography, TextField, Button, Avatar, Grid } from '@mui/material';
+import { Container, Typography, TextField, Button, Avatar, Grid, Box } from '@mui/material';
 
 const ProfilePage = () => {
-    // Kullanıcı bilgilerini state'de tutma
     const [user, setUser] = useState({
         firstName: "Ahmet",
         email: "ahmet@example.com",
@@ -12,47 +11,62 @@ const ProfilePage = () => {
         employeeId: "12345"
     });
 
-    // Form alanlarında değişiklik olduğunda user state'ini güncelle
     const handleChange = (prop) => (event) => {
         setUser({ ...user, [prop]: event.target.value });
     };
 
     return (
         <Container component="main" maxWidth="sm">
-            <Typography component="h1" variant="h5">
-                Profil Bilgileri
-            </Typography>
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                {/* Kullanıcı profil resmi buraya eklenebilir */}
-            </Avatar>
-            <form>
-                <Grid container spacing={2}>
-                    {Object.keys(user).map((key, index) => (
-                        <Grid item xs={12} key={index}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id={key}
-                                label={key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1').trim()} // Convert camelCase to Regular Case
-                                name={key}
-                                autoComplete={key}
-                                value={user[key]}
-                                onChange={handleChange(key)}
-                            />
-                        </Grid>
-                    ))}
-                </Grid>
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    sx={{ mt: 3, mb: 2 }}
-                >
-                    Bilgileri Güncelle
-                </Button>
-            </form>
+            <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Avatar sx={{ m: 1, bgcolor: 'secondary.main', width: 56, height: 56 }}>
+                    {/* Kullanıcı profil resmi buraya eklenebilir */}
+                </Avatar>
+                <Typography component="h1" variant="h5" sx={{ margin: (theme) => theme.spacing(1) }}>
+                    Profil Bilgileri
+                </Typography>
+                <Box component="form" noValidate sx={{ mt: 3 }}>
+                    <Grid container spacing={2}>
+                        {Object.keys(user).map((key, index) => (
+                            <Grid item xs={12} key={index}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id={key}
+                                    label={key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1').trim()}
+                                    name={key}
+                                    autoComplete={key}
+                                    value={user[key]}
+                                    onChange={handleChange(key)}
+                                    sx={{
+                                        '& .MuiInputBase-input': {
+                                            borderRadius: 4,
+                                            backgroundColor: 'background.paper',
+                                            border: '1px solid #ced4da',
+                                            fontSize: 16,
+                                            padding: '10px 12px',
+                                            transition: theme => theme.transitions.create(['border-color', 'box-shadow']),
+                                            '&:focus': {
+                                                boxShadow: `${theme => theme.palette.secondary.main} 0 0 0 0.2rem`,
+                                                borderColor: theme => theme.palette.secondary.main,
+                                            },
+                                        },
+                                    }}
+                                />
+                            </Grid>
+                        ))}
+                    </Grid>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="secondary"
+                        sx={{ mt: 3, mb: 2, py: 1.5, fontSize: '1rem' }}
+                    >
+                        Bilgileri Güncelle
+                    </Button>
+                </Box>
+            </Box>
         </Container>
     );
 }
