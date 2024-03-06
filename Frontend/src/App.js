@@ -3,7 +3,6 @@ import { CssBaseline } from "@mui/material";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 import NextPage from "./pages/NextPage";
 import EmployerList from "./pages/Employers/EmployerList";
 import JobDetailPage from "./pages/Jobs/JobDetailPage";
@@ -14,6 +13,7 @@ import EmployerSignUpPage from "./pages/Employers/EmployerSignUpPage";
 import SystemUserSignUpPage from "./pages/SystemUsers/SystemUserSignUpPage";
 import JobAddPage from "./pages/Employers/JobAddPage";
 import MyDrawer from "./layouts/MyDrawer";
+import ProfilePage from "./pages/Profiles/ProfilePage";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -29,6 +29,11 @@ function App() {
             <div>
                 <MyDrawer/>
                 <EmployerList />
+            </div>}/>
+        <Route path="/profile" element={
+            <div>
+              <MyDrawer/>
+              <ProfilePage />
             </div>}/>
         <Route exact path="/jobs" element={<JobList/>} />
         <Route path="/jobs/:jobId" element={<JobDetailPage />} />

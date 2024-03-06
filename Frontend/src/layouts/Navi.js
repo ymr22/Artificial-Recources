@@ -15,7 +15,8 @@ import {
 } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
 import EmployerList from "../pages/Employers/EmployerList";
-import JobList from "../pages/Jobs/JobList"; // Import your Jobs component
+import JobList from "../pages/Jobs/JobList";
+import ProfilePage from "../pages/Profiles/ProfilePage"; // Import your Jobs component
 
 export default function Navi() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -80,6 +81,17 @@ export default function Navi() {
                         </ListItemButton>
                         <ListItemButton
                             component={Link}
+                            to="/profile" // Assuming path for EmployerList
+                            selected={selectedComponent === 'profile'}
+                            onClick={() => handleListItemClick('profile')} // Handle Employees click
+                        >
+                            <ListItemIcon>
+                                {/* Add your employees icon here */}
+                            </ListItemIcon>
+                            <ListItemText primary="Profile" />
+                        </ListItemButton>
+                        <ListItemButton
+                            component={Link}
                             to="/jobs"
                             selected={selectedComponent === 'jobs'}
                             onClick={() => handleListItemClick('jobs')} // Handle Jobs click
@@ -107,6 +119,7 @@ export default function Navi() {
                 <Container maxWidth="lg">
                     {selectedComponent === 'jobs' && <JobList />}
                     {selectedComponent === 'employers' && <EmployerList />}
+                    {selectedComponent === 'profile' && <ProfilePage />}
                     {selectedComponent === null && (
                         <Typography variant="h5" component="div">
                             Welcome!

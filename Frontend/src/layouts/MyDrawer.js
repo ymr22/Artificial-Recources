@@ -3,10 +3,13 @@ import {
     Box,
     Drawer,
     List,
-    ListItemButton,ListItemText, ListItemIcon,
+    ListItemButton, ListItemText, ListItemIcon, Container, Typography,
     // other imports
 } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
+import JobList from "../pages/Jobs/JobList";
+import EmployerList from "../pages/Employers/EmployerList";
+import ProfilePage from "../pages/Profiles/ProfilePage";
 
 export default function MyDrawer() {
 
@@ -36,6 +39,17 @@ export default function MyDrawer() {
                         </ListItemButton>
                         <ListItemButton
                             component={Link}
+                            to="/profile" // Assuming path for EmployerList
+                            selected={selectedComponent === 'profile'}
+                            onClick={() => handleListItemClick('profile')} // Handle Employees click
+                        >
+                            <ListItemIcon>
+                                {/* Add your employees icon here */}
+                            </ListItemIcon>
+                            <ListItemText primary="Profile" />
+                        </ListItemButton>
+                        <ListItemButton
+                            component={Link}
                             to="/jobs"
                             selected={selectedComponent === 'jobs'}
                             onClick={() => handleListItemClick('jobs')} // Handle Jobs click
@@ -59,6 +73,18 @@ export default function MyDrawer() {
                     </List>
                 </Box>
             </Drawer>
+            <Box sx={{ display: 'flex', flexGrow: 1, mt: 5 }}>
+                <Container maxWidth="lg">
+                    {selectedComponent === 'jobs' && <JobList />}
+                    {selectedComponent === 'employers' && <EmployerList />}
+                    {selectedComponent === 'profile' && <ProfilePage />}
+                    {selectedComponent === null && (
+                        <Typography variant="h5" component="div">
+                            Welcome!
+                        </Typography>
+                    )}
+                </Container>
+            </Box>
         </div>
     );
 }
