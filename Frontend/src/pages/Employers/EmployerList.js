@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import EmployerService from '../../services/EmployerService';
 
 export default function EmployerList() {
-  const [employers, setEmployers] = useState([]);
+  const [employers, setEmployers] = useState([{'companyName': "aaa", user:{'email': "kflsjdlkfj"}}]);
 
   useEffect(() => {
     let employerService = new EmployerService();
@@ -40,11 +40,10 @@ export default function EmployerList() {
             <TableHead>
               <TableRow>
                 <TableCell>Company Name</TableCell>
-                <TableCell>Website(-s)</TableCell>
                 <TableCell>Phone Number</TableCell>
                 <TableCell>Email</TableCell>
                 <TableCell>Joined Date</TableCell>
-                <TableCell>Other Infos</TableCell>
+                <TableCell>Calendar</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -55,7 +54,6 @@ export default function EmployerList() {
                         {employer.companyName}
                       </Typography>
                     </TableCell>
-                    <TableCell>{employer.webSites}</TableCell>
                     <TableCell>{employer.phone}</TableCell>
                     <TableCell>{employer.user.email}</TableCell>
                     <TableCell>{employer.user.createdDate}</TableCell>
