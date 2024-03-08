@@ -14,8 +14,23 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import EmployerService from '../../services/EmployerService';
+import axios from 'axios';
 
 export default function EmployerList() {
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/employee/hello-world/')
+        .then(response => {
+          setMessage(response.data.message);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+  }, []);
+
+
+
   const [employers, setEmployers] = useState([{'companyName': "aaa", user:{'email': "kflsjdlkfj"}}]);
 
   useEffect(() => {
@@ -32,11 +47,12 @@ export default function EmployerList() {
 
   return (
       <div>
-        <Typography variant="h4" component="h2" sx={{ p: 3, marginLeft: 30 }}>
+
+        <Typography variant="h4" component="h2" sx={{p: 3, marginLeft: 30}}>
           Employer List:
         </Typography>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700, maxWidth: 1250, marginLeft: 35 }}>
+          <Table sx={{minWidth: 700, maxWidth: 1250, marginLeft: 35}}>
             <TableHead>
               <TableRow>
                 <TableCell>Company Name</TableCell>
