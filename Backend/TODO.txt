@@ -1,0 +1,19 @@
+Boards to add
+    employee, company, jobs, cities, departments, work times, roles
+
+Forms
+    cv, interview questions (AI generated), person availability query
+    performance review
+
+AI Implementations
+    Say you are going to apply for a job in this company.
+    Given the link, you can chat about your suitability for the job,
+    your possibility to get the job etc.
+
+General Structure
+    There is an employee login. People access different levels of
+    information given their position in the company.
+    You can also guest login to view job openings and general information
+    about the company. Like a LinkedIn page but better.
+    You can apply the jobs and the system automatically weeds out incompetent
+    applications making things easier for the employer.

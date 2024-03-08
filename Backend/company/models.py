@@ -1,4 +1,5 @@
 from django.db import models
+# possibly remove bc this may be a service individual to company
 
 
 class Company(models.Model):
