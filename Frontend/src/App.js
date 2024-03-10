@@ -3,7 +3,7 @@ import { CssBaseline } from "@mui/material";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import NextPage from "./pages/NextPage";
+import NextPage from "./pages/Dashboard/Dashboard";
 import EmployerList from "./pages/Employers/EmployerList";
 import JobDetailPage from "./pages/Jobs/JobDetailPage";
 import ChoosingSignInMethod from "./pages/ChoosingSignInMethod";
@@ -15,6 +15,9 @@ import JobAddPage from "./pages/Employers/JobAddPage";
 import MyDrawer from "./layouts/MyDrawer";
 import ProfilePage from "./pages/Profiles/ProfilePage";
 import OffDay from "./pages/OffDay/OffDayControlPage";
+import LearningMaterial from "./pages/LearningMaterial/LearningMaterialPage";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import CVScan from "./pages/CVScanning/CVScanningPage";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -25,12 +28,16 @@ function App() {
       <CssBaseline />
       <Routes>
         <Route path="/login" element={<Login setAuth={setAuth} />} />
-        <Route path="/nextPage" element={<NextPage />}/>
-        <Route path="/employers" element={
-            <div>
-              <MyDrawer/>
-              <EmployerList />
-            </div>}/>
+          <Route path="/dashboard" element={
+              <div>
+                  <MyDrawer/>
+                  <Dashboard/>
+              </div>}/>
+          <Route path="/employers" element={
+              <div>
+                <MyDrawer/>
+                <EmployerList />
+             </div>}/>
         <Route path="/profile" element={
             <div>
               <MyDrawer/>
@@ -40,6 +47,16 @@ function App() {
           <div>
               <MyDrawer/>
               <OffDay />
+          </div>}/>
+        <Route path="/learning" element={
+          <div>
+              <MyDrawer/>
+              <LearningMaterial />
+          </div>}/>
+        <Route path="/cvscan" element={
+          <div>
+              <MyDrawer/>
+              <CVScan/>
           </div>}/>
         <Route exact path="/jobs" element={<JobList/>} />
         <Route path="/jobs/:jobId" element={<JobDetailPage />} />

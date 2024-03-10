@@ -4,17 +4,11 @@ import {
     Typography,
     Button,
     TextField,
-    Select,
-    MenuItem,
     Grid,
     Paper,
-    InputAdornment,
-    IconButton,
-    CheckCircleIcon,
-    CancelIcon, Container,
+    InputAdornment, Container, TableContainer,
 } from '@mui/material';
 import axios from 'axios';
-import {blueGrey} from "@mui/material/colors";
 
 export default function OffDay() {
     const [employers, setEmployers] = useState([]);
@@ -51,7 +45,7 @@ export default function OffDay() {
             <Typography variant="h4" component="h2" sx={{p: 3, marginLeft: 30}}>
                 Off-Day Request:
             </Typography>
-            <Container component="main" maxWidth="sm" sx={{border:1, borderColor:'darkBlue'}}>
+            <TableContainer component={Paper} maxWidth="sm" sx={{marginLeft: 40, maxWidth:600}}>
             <Box sx={{ p: 2, mb: 2, width: 400}}>
                     <Grid container spacing={3} sx={{ p: 2, mb: 2, width: 600}}>
                         <Typography variant="h5">
@@ -111,7 +105,7 @@ export default function OffDay() {
                             </Paper>)}
                     </Grid>
                 </Box>
-            </Container>
+            </TableContainer>
         </div>
     );
 }

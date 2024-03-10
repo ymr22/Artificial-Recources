@@ -91,7 +91,7 @@ const Login = ({ setAuth }) => {
             sx={{ mt: 3 }}
           >
             Want to see next page?{" "}
-            <Link variant="subtitle2" component={RouterLink} to="/nextPage">
+            <Link variant="subtitle2" component={RouterLink} to="/dashboard">
               Next Page
             </Link>
           </Typography>
