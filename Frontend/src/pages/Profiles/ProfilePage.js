@@ -46,13 +46,11 @@ const ProfilePage = () => {
                                             '& .MuiInputBase-input': {
                                                 borderRadius: 4,
                                                 backgroundColor: 'background.paper',
-                                                border: '1px solid #ced4da',
                                                 fontSize: 16,
                                                 padding: '10px 12px',
                                                 transition: theme => theme.transitions.create(['border-color', 'box-shadow']),
                                                 '&:focus': {
                                                     boxShadow: `${theme => theme.palette.secondary.main} 0 0 0 0.2rem`,
-                                                    borderColor: theme => theme.palette.secondary.main,
                                                 },
                                             },
                                         }}
