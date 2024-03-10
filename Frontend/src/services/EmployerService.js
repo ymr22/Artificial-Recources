@@ -8,4 +8,8 @@ export default class EmployerService {
   getEmployerById(id) {
     return axios.get("http://localhost:8080/api/employers/getbyid?id="+id)
   }
+
+  getEmployerOddDayById(id) {
+    return axios.get("http://localhost:8080/api/employers/getOffDay?id="+id)
+  }
 }

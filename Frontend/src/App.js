@@ -14,6 +14,7 @@ import SystemUserSignUpPage from "./pages/SystemUsers/SystemUserSignUpPage";
 import JobAddPage from "./pages/Employers/JobAddPage";
 import MyDrawer from "./layouts/MyDrawer";
 import ProfilePage from "./pages/Profiles/ProfilePage";
+import OffDay from "./pages/OffDay/OffDayControlPage";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -35,6 +36,11 @@ function App() {
               <MyDrawer/>
               <ProfilePage />
             </div>}/>
+        <Route path="/offDay" element={
+          <div>
+              <MyDrawer/>
+              <OffDay />
+          </div>}/>
         <Route exact path="/jobs" element={<JobList/>} />
         <Route path="/jobs/:jobId" element={<JobDetailPage />} />
         <Route path="/signIn" element={<ChoosingSignInMethod />} />

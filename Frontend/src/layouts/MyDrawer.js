@@ -68,6 +68,17 @@ export default function MyDrawer() {
                             </ListItemIcon>
                             <ListItemText primary="Employees" />
                         </ListItemButton>
+                        <ListItemButton
+                            component={Link}
+                            to="/offDay" // Assuming path for EmployerList
+                            selected={selectedComponent === 'offDay'}
+                            onClick={() => handleListItemClick('offDay')} // Handle Employees click
+                        >
+                            <ListItemIcon>
+                                {/* Add your employees icon here */}
+                            </ListItemIcon>
+                            <ListItemText primary="Off-Day Request" />
+                        </ListItemButton>
                     </List>
                 </Box>
             </Drawer>
