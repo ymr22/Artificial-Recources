@@ -90,6 +90,17 @@ export default function MyDrawer() {
                             </ListItemIcon>
                             <ListItemText primary="CV Scan" />
                         </ListItemButton>
+                        <ListItemButton
+                            component={Link}
+                            to="/login" // Assuming path for EmployerList
+                            selected={selectedComponent === 'Logout'}
+                            onClick={() => handleListItemClick('Logout')} // Handle Employees click
+                        >
+                            <ListItemIcon>
+                                {/* Add your employees icon here */}
+                            </ListItemIcon>
+                            <ListItemText primary="Logout" />
+                        </ListItemButton>
                     </List>
                 </Box>
             </Drawer>
