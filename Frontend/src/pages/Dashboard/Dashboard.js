@@ -37,8 +37,10 @@ const ListContainer = styled(List)`
 const ListItemStyled = styled(ListItem)`
   padding: 10px;
   border-radius: 10px;
+
   &:hover {
-    background-color: #f5f5f5;
+    background-color: #f5f5f5; /* Change background color on hover */
+    color: #000000; /* Change text color on hover */
   }
 `;
 
@@ -124,7 +126,7 @@ const Dashboard = () => {
               <CardContent>
                 <Typography variant="h6">Ekibim</Typography>
                 <Divider />
-                <ListContainer  sx={{lineHeight:3}}>
+                <ListContainer  sx={{lineHeight:3}} >
                   {team.map((member) => (
                       <ListItemStyled key={member.name}>
                         <Typography variant="body1">{member.name}:{ }</Typography>

@@ -91,6 +91,7 @@ const LoginForm = ({ setAuth }) => {
               {...getFieldProps("email")}
               error={Boolean(touched.email && errors.email)}
               helperText={touched.email && errors.email}
+              sx={{color:"white"}}
             />
 
             <TextField

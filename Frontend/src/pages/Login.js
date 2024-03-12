@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 
 //////////////////////////////////
 const RootStyle = styled("div")({
-  background: "rgb(249, 250, 251)",
+  background: "rgba(21,118,129,0.73)",
   height: "100vh",
   display: "grid",
   placeItems: "center",
@@ -26,7 +26,7 @@ const ContentStyle = styled("div")({
   display: "flex",
   justifyContent: "center",
   flexDirection: "column",
-  background: "#fff",
+  background: "rgba(92,144,147,0.73)",
 });
 
 let easing = [0.6, -0.05, 0.01, 0.99];
@@ -53,7 +53,7 @@ const Login = ({ setAuth }) => {
         <ContentStyle>
           <HeadingStyle component={motion.div} {...fadeInUp}>
             
-            <Typography sx={{ color: "text.secondary", mb: 5 }}>
+            <Typography sx={{  mb: 5 }}>
               Login to your account
             </Typography>
           </HeadingStyle>
@@ -63,7 +63,7 @@ const Login = ({ setAuth }) => {
           </Box>
 
           <Divider sx={{ my: 3 }} component={motion.div} {...fadeInUp}>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            <Typography variant="body2">
               OR
             </Typography>
           </Divider>
