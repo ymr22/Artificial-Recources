@@ -18,6 +18,8 @@ import OffDay from "./pages/OffDay/OffDayControlPage";
 import LearningMaterial from "./pages/LearningMaterial/LearningMaterialPage";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import CVScan from "./pages/CVScanning/CVScanningPage";
+import ChooseUser from "./pages/ChooseUser";
+import ApplyJob from "./pages/ApplyJob/ApplyJob";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -27,7 +29,15 @@ function App() {
     <>
       <CssBaseline />
       <Routes>
-        <Route path="/login" element={<Login setAuth={setAuth} />} />
+        <Route path="/chooseLoginType" element={
+            <div>
+                <ChooseUser/>
+            </div>} />
+          <Route path="/apply-login" element={
+              <div>
+                  <ApplyJob/>
+              </div>} />
+          <Route path="/login" element={<Login setAuth={setAuth}/>}/>
           <Route path="/dashboard" element={
               <div>
                   <MyDrawer/>
@@ -72,7 +82,7 @@ function App() {
             auth ? (
               <Home setAuth={setAuth} />
             ) : (
-              <Navigate to="/login" state={{ from: location }} replace />
+              <Navigate to="/chooseLoginType" state={{ from: location }} replace />
             )
           }
         />
