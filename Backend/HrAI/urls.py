@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from chatgpt import urls as ai_urls
+from employee import urls as employee_urls
+from user import urls as user_urls
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('ai/', include(ai_urls)),
+    path('api/employers/', include(employee_urls)),
+    path('users/', include(user_urls)),
 ]
