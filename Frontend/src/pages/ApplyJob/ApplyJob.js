@@ -10,41 +10,9 @@ import {
     MenuItem,
     FormControl,
     InputLabel,
-    FormHelperText, makeStyles,
+    FormHelperText, makeStyles, Container, Grid, InputAdornment,
 } from '@mui/material';
-
-const styles = {
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-    },
-    paper: {
-        padding: '20px',
-        maxWidth: '600px',
-        width: '90%',
-    },
-    form: {
-        display: 'flex',
-        flexDirection: 'column',
-        width: '100%',
-    },
-    textField: {
-        backgroundColor: '#fff',
-        margin: '10px 0',
-    },
-    button: {
-        margin: '10px 0',
-        backgroundColor: '#7f43bd',
-        color: '#fff',
-        '&:hover': {
-            backgroundColor: '#a086c7',
-        },
-    },
-};
-
+import './ApplyForm.css';
 const ApplyJob = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -52,7 +20,7 @@ const ApplyJob = () => {
         email: '',
         phone: '',
         birthDate: '',
-        education: [],
+        education: [{schoolName:'', department:'', graduationDate:''}],
         previousJobs: [],
         experience: [],
         skills: [],
@@ -156,13 +124,13 @@ const ApplyJob = () => {
     };
 
     return (
-        <div className={styles.container}>
-            <Paper className={styles.paper}>
-                <Typography variant="h5">Misafir İş Başvurusu</Typography>
+        <div className="container">
+            <Container className="paper">
+                <Typography variant="h5">İş Başvurusu</Typography>
                 <Divider />
                 <Box sx={{ padding: '20px' }}>
-                    <form className={styles.form} onSubmit={handleSubmit}>
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                    <form className="form" onSubmit={handleSubmit}>
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent:'flex-start', gap: '50px'}}>
                             <TextField
                                 label="Ad"
                                 name="name"
@@ -188,6 +156,11 @@ const ApplyJob = () => {
                             margin="normal"
                             required
                             type="email"
+                            sx={{
+                                '&:-webkit-box-shadow': {
+                                    backgroundColor: '#5c2d91', // istediğiniz rengi seçin
+                                },
+                            }}
                         />
                         <TextField
                             label="Telefon Numarası"
@@ -205,13 +178,16 @@ const ApplyJob = () => {
                             margin="normal"
                             required
                             type="date"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
                         />
 
-                        <Box sx={{ mt: 3 }}>
+                        <Box sx={{ mt: 3, lineHeight:3 }}>
                             <Typography variant="h6">Eğitim Bilgileri</Typography>
                             <Divider />
                             {formData.education.map((education) => (
-                                <Box key={education.id}>
+                                <Box key={education.id} sx={{display: 'flex', flexWrap: 'wrap', justifyContent:'flex-start', gap: '30px'}}>
                                     <TextField
                                         label="Okul Adı"
                                         value={education.schoolName}
@@ -230,6 +206,9 @@ const ApplyJob = () => {
                                         onChange={handleInputChange}
                                         margin="normal"
                                         type="date"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
                                     />
                                     <Button variant="outlined" color="error" size="small" onClick={() => removeEducation(education.id)}>
                                         Sil
@@ -239,11 +218,11 @@ const ApplyJob = () => {
                             <Button variant="outlined" onClick={addEducation}>Eğitim Bilgisi Ekle</Button>
                         </Box>
 
-                        <Box sx={{ mt: 3 }}>
+                        <Box sx={{ mt: 3, lineHeight:3 }}>
                             <Typography variant="h6">Önceki İş Yerleri</Typography>
                             <Divider />
                             {formData.previousJobs.map((job) => (
-                                <Box key={job.id}>
+                                <Box key={job.id} sx={{display: 'flex', flexWrap: 'wrap', justifyContent:'flex-start', gap: '30px'}}>
                                     <TextField
                                         label="Şirket Adı"
                                         value={job.companyName}
@@ -262,6 +241,9 @@ const ApplyJob = () => {
                                         onChange={handleInputChange}
                                         margin="normal"
                                         type="date"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
                                     />
                                     <TextField
                                         label="Bitiş Tarihi"
@@ -269,6 +251,9 @@ const ApplyJob = () => {
                                         onChange={handleInputChange}
                                         margin="normal"
                                         type="date"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
                                     />
                                     <Button variant="outlined" color="error" size="small" onClick={() => removePreviousJob(job.id)}>
                                         Sil
@@ -278,11 +263,11 @@ const ApplyJob = () => {
                             <Button variant="outlined" onClick={addPreviousJob}>Önceki İş Yeri Ekle</Button>
                         </Box>
 
-                        <Box sx={{ mt: 3 }}>
+                        <Box sx={{ mt: 3, lineHeight:3 }}>
                             <Typography variant="h6">Deneyimler</Typography>
                             <Divider />
                             {formData.experience.map((experience) => (
-                                <Box key={experience.id}>
+                                <Box key={experience.id} sx={{display: 'flex', flexWrap: 'wrap', justifyContent:'flex-start', gap: '30px'}}>
                                     <TextField
                                         label="Deneyim Başlığı"
                                         value={experience.title}
@@ -305,11 +290,11 @@ const ApplyJob = () => {
                             <Button variant="outlined" onClick={addExperience}>Deneyim Ekle</Button>
                         </Box>
 
-                        <Box sx={{ mt: 3 }}>
+                        <Box sx={{ mt: 3, lineHeight:3 }}>
                             <Typography variant="h6">Yetenekler</Typography>
                             <Divider />
                             {formData.skills.map((skill, index) => (
-                                <Box key={index}>
+                                <Box key={index} sx={{display: 'flex', flexWrap: 'wrap', justifyContent:'flex-start', gap: '30px'}}>
                                     <TextField
                                         label="Yetenek"
                                         value={skill}
@@ -325,11 +310,11 @@ const ApplyJob = () => {
                                 Button variant="outlined" onClick={addSkill}>Yetenek Ekle</Button>
                         </Box>
 
-                        <Box sx={{ mt: 3 }}>
+                        <Box sx={{ mt: 3, lineHeight:3 }}>
                             <Typography variant="h6">Projeler</Typography>
                             <Divider />
                             {formData.projects.map((project) => (
-                                <Box key={project.id}>
+                                <Box key={project.id} sx={{display: 'flex', flexWrap: 'wrap', justifyContent:'flex-start', gap: '30px'}}>
                                     <TextField
                                         label="Proje Başlığı"
                                         value={project.title}
@@ -358,11 +343,11 @@ const ApplyJob = () => {
                             <Button variant="outlined" onClick={addProject}>Proje Ekle</Button>
                         </Box>
 
-                        <Box sx={{ mt: 3 }}>
+                        <Box sx={{ mt: 3 , lineHeight:3}}>
                             <Typography variant="h6">İlgi Alanları</Typography>
                             <Divider />
                             {formData.interests.map((interest, index) => (
-                                <Box key={index}>
+                                <Box key={index} sx={{display: 'flex', flexWrap: 'wrap', justifyContent:'flex-start', gap: '30px'}}>
                                     <TextField
                                         label="İlgi Alanı"
                                         value={interest}
@@ -378,11 +363,11 @@ const ApplyJob = () => {
                         </Box>
 
                         <Box sx={{ mt: 3 }}>
-                            <Button variant="contained" type="submit" className={styles.button}>Başvur</Button>
+                            <Button variant="contained" type="submit" className="button">Başvur</Button>
                         </Box>
                     </form>
                 </Box>
-            </Paper>
+            </Container>
         </div>
     );
 };
