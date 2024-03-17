@@ -19,24 +19,16 @@ import axios from 'axios';
 export default function EmployerList() {
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    axios.get('http://localhost:8000/employee/hello-world/')
-        .then(response => {
-          setMessage(response.data.message);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-  }, []);
 
 
 
-  const [employers, setEmployers] = useState([{'companyName': "aaa", user:{'email': "kflsjdlkfj"}}]);
+
+  const [employers, setEmployers] = useState([{employee_id: "aaa", user:{'email': "kflsjdlkfj"}, first_name:"", middle_name:"", surname:""}]);
 
   useEffect(() => {
     let employerService = new EmployerService();
 
-    employerService.getEmployers().then((result) => setEmployers(result.data.data)).catch();
+    employerService.getEmployers().then((result) => setEmployers(result.data)).catch();
   }, []);
 
   const navigate = useNavigate();
@@ -64,15 +56,15 @@ export default function EmployerList() {
             </TableHead>
             <TableBody>
               {employers.map((employer) => (
-                  <TableRow key={employer.id}>
+                  <TableRow key={employer.employee_id}>
                     <TableCell>
                       <Typography variant="body1" component="p">
                         {employer.companyName}
                       </Typography>
                     </TableCell>
-                    <TableCell>{employer.phone}</TableCell>
-                    <TableCell>{employer.user.email}</TableCell>
-                    <TableCell>{employer.user.createdDate}</TableCell>
+                    <TableCell>{employer.first_name}</TableCell>
+                    <TableCell>{employer.middle_name}</TableCell>
+                    <TableCell>{employer.surname}</TableCell>
                     <TableCell>
                       <Button
                           variant="outlined"

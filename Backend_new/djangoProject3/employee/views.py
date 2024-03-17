@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.utils import timezone
+from django.views.decorators import csrf
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -11,6 +12,7 @@ from ai.app import generate_answer as ai_query
 
 
 @api_view(['GET'])
+@csrf.csrf_exempt
 def employee_list(request):
     queryset = Employee.objects.all()
     serializer = EmployeeSerializer(queryset, many=True)
@@ -28,7 +30,7 @@ def get_employee(request, pk):
 def dash_employee(request, pk):
     employee = Employee.objects.get(employee_id=pk)
     employee_serializer = EmployeeSerializer(employee, many=False)
-    team = Employee.objects.filter(department__iexact=employee.department)
+    team = Employee.objects.filter(department__iexact=employee.department).exclude(employee_id=employee.employee_id)
     team_serializer = EmployeeSerializer(team, many=True)
     messages = Message.objects.filter(to_user__employee_id=employee.employee_id, is_deleted=False)
     message_serializer = MessageSerializer(messages, many=True)
