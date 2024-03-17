@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models import OneToOneField
+
+from user.models import Profile
 from utils.models import CV
 
 
@@ -10,26 +13,20 @@ class Employee(models.Model):
                         ("bachelors degree", "Bachelors Degree"),
                         ("masters degree", "Masters Degree"), ("phd", "Phd")]
 
+    user = OneToOneField(Profile, on_delete=models.CASCADE, null=True, blank=True)
     employee_id = models.AutoField(primary_key=True, unique=True, editable=False, null=False, auto_created=True)
     first_name = models.CharField(max_length=20)
     middle_name = models.CharField(max_length=20, blank=True, null=True)
     surname = models.CharField(max_length=40)
-    age = models.IntegerField()
-    salary = models.IntegerField()
-    email = models.EmailField()
-    gender = models.CharField(max_length=6, choices=GENDER_CHOICES)
-    birth_date = models.DateField()
-    date_of_employment = models.DateField()
-    address = models.CharField(max_length=250)
-    photo = models.ImageField()
-    cv = models.OneToOneField(CV, on_delete=models.PROTECT)
-    education = models.CharField(max_length=100, blank=True, null=True, choices=EDUCATION_LEVELS)
+    age = models.IntegerField(null=True, blank=True)
+    salary = models.IntegerField(null=True, blank=True)
+    email = models.CharField(max_length=100, null=True, blank=True)
+    gender = models.CharField(choices=GENDER_CHOICES, null=True, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
+    date_of_employment = models.DateField(null=True, blank=True)
+    address = models.CharField(max_length=250, null=True, blank=True)
+    photo = models.ImageField(null=True, blank=True, upload_to='uploads')
+    cv = models.OneToOneField(CV, on_delete=models.PROTECT, null=True, blank=True)
+    education = models.CharField(blank=True, null=True, choices=EDUCATION_LEVELS)
     university = models.CharField(max_length=100, blank=True, null=True)
     position = models.CharField(max_length=100, blank=True, null=True)
-
-    class Meta:
-        ordering = ["employee_id", "surname", "first_name"]
-
-    def __str__(self):
-        return self.first_name, self.surname
-

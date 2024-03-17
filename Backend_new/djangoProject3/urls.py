@@ -1,5 +1,5 @@
 """
-URL configuration for HrAI project.
+URL configuration for djangoProject3 project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.0/topics/http/urls/
@@ -16,12 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from employee import urls as employee_urls
-from user import urls as user_urls
-
+import employee.urls as employee_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/employers/', include(employee_urls)),
-    path('accounts/', include(user_urls)),
+    path('employee/', include(employee_urls)),
 ]
