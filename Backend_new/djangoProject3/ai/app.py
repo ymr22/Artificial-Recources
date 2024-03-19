@@ -10,3 +10,5 @@ model = genai.GenerativeModel('gemini-pro')
 def generate_answer(question):
     response = model.generate_content(question)
     return response
+
+

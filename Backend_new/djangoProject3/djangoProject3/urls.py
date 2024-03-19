@@ -18,9 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 import employee.urls as employee_urls
 import user.urls as user_urls
+import vertex_ai.urls as vertex_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include(user_urls)),
     path('employee/', include(employee_urls)),
+    path('vertex/', include(vertex_urls)),
 ]
