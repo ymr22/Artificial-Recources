@@ -20,6 +20,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import CVScan from "./pages/CVScanning/CVScanningPage";
 import ChooseUser from "./pages/ChooseUser";
 import ApplyJob from "./pages/ApplyJob/ApplyJob";
+import OffDayConfirmation from "./pages/OffDay/OffDayConfirmation";
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -67,6 +68,11 @@ function App() {
           <div>
               <MyDrawer/>
               <CVScan/>
+          </div>}/>
+        <Route path="/offDayConfirm" element={
+          <div>
+              <MyDrawer/>
+              <OffDayConfirmation />
           </div>}/>
         <Route exact path="/jobs" element={<JobList/>} />
         <Route path="/jobs/:jobId" element={<JobDetailPage />} />

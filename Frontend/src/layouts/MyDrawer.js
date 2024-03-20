@@ -92,6 +92,17 @@ export default function MyDrawer() {
                         </ListItemButton>
                         <ListItemButton
                             component={Link}
+                            to="/offDayConfirm" // Assuming path for EmployerList
+                            selected={selectedComponent === 'OffDayConfirmation'}
+                            onClick={() => handleListItemClick('OffDayConfirmation')} // Handle Employees click
+                        >
+                            <ListItemIcon>
+                                {/* Add your employees icon here */}
+                            </ListItemIcon>
+                            <ListItemText primary="Off-Day Approval" />
+                        </ListItemButton>
+                        <ListItemButton
+                            component={Link}
                             to="/login" // Assuming path for EmployerList
                             selected={selectedComponent === 'Logout'}
                             onClick={() => handleListItemClick('Logout')} // Handle Employees click
