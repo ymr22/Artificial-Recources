@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     Box,
     Typography,
@@ -9,7 +9,8 @@ import {
     TableRow,
     TableCell,
     Paper,
-    Container, TableBody,
+    Container,
+    TableBody,
 } from '@mui/material';
 
 const EXAMPLE_EMPLOYEES = [
@@ -42,57 +43,33 @@ const EXAMPLE_EMPLOYEES = [
 export default function ApproveOffDayRequests() {
     const [employers, setEmployers] = useState(EXAMPLE_EMPLOYEES);
     const [permissionStatusUpdates, setPermissionStatusUpdates] = useState([]);
+    const selectedActionRef = useRef('');
 
-    const handleApprovePermission = async (employeeId) => {
+    const handlePermissionAction = async (employeeId, action) => {
         // Simulate API call
-        console.log(`Approving permission for employee ${employeeId}`);
+        console.log(`Taking action "${action}" for employee ${employeeId}`);
         setEmployers(
             employers.map((employer) =>
-                employer.id === employeeId ? { ...employer, permissionStatus: 'Approved' } : employer
+                employer.id === employeeId ? { ...employer, permissionStatus: action } : employer
             )
         );
         setPermissionStatusUpdates([
             ...permissionStatusUpdates,
             {
                 employeeId,
-                status: 'Approved',
+                status: action,
             },
         ]);
+        selectedActionRef.current = action;
     };
 
-    const handleReviewPermission = async (employeeId) => {
-        // Simulate API call
-        console.log(`Reviewing permission for employee ${employeeId}`);
-        setEmployers(
-            employers.map((employer) =>
-                employer.id === employeeId ? { ...employer, permissionStatus: 'Reviewing' } : employer
-            )
-        );
-        setPermissionStatusUpdates([
-            ...permissionStatusUpdates,
-            {
-                employeeId,
-                status: 'Reviewing',
-            },
-        ]);
-    };
-
-    const handleRejectPermission = async (employeeId) => {
-        // Simulate API call
-        console.log(`Rejecting permission for employee ${employeeId}`);
-        setEmployers(
-            employers.map((employer) =>
-                employer.id === employeeId ? { ...employer, permissionStatus: 'Rejected' } : employer
-            )
-        );
-        setPermissionStatusUpdates([
-            ...permissionStatusUpdates,
-            {
-                employeeId,
-                status: 'Rejected',
-            },
-        ]);
-    };
+    useEffect(() => {
+        // `selectedActionRef`'in güncel değerini kullanarak render işlemini tetikle
+        const selectedAction = selectedActionRef.current;
+        if (selectedAction !== '') {
+            // ...
+        }
+    }, [selectedActionRef]);
 
     return (
         <div>
@@ -108,8 +85,8 @@ export default function ApproveOffDayRequests() {
                                 <TableCell>Remaining Permission Days</TableCell>
                                 <TableCell>Used Permission Days</TableCell>
                                 <TableCell>Requested Days</TableCell>
-                                <TableCell>Status</TableCell>
                                 <TableCell>Actions</TableCell>
+                                <TableCell>Selected Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -123,44 +100,41 @@ export default function ApproveOffDayRequests() {
                                         <TableCell>{employer.remainingPermissionDays}</TableCell>
                                         <TableCell>{employer.usedPermissionDays}</TableCell>
                                         <TableCell>{employer.requestedDays}</TableCell>
-                                        <TableCell>{statusText}</TableCell>
                                         <TableCell>
-                                            {employer.permissionStatus === 'Pending' && (
-                                                <>
-                                                    <Button
-                                                        variant="contained"
-                                                        color="success"
-                                                        size="small"
-                                                        onClick={() => handleApprovePermission(employer.id)}
-                                                    >
-                                                        Approve
-                                                    </Button>
-                                                    <Button
-                                                        variant="contained"
-                                                        color="warning"
-                                                    size="small"
-                                                    onClick={() => handleReviewPermission(employer.id)}
-                                                    >
-                                                    Review
-                                                </Button>
-                                                <Button
+                                            <Button
+                                                variant="contained"
+                                                color="success"
+                                                size="small"
+                                                onClick={() => handlePermissionAction(employer.id, 'Approved')}
+                                            >
+                                                Approve
+                                            </Button>
+                                            <Button
+                                                variant="contained"
+                                                color="warning"
+                                                size="small"
+                                                onClick={() => handlePermissionAction(employer.id, 'Reviewing')}
+                                            >
+                                                Review
+                                            </Button>
+                                            <Button
                                                 variant="contained"
                                                 color="error"
                                                 size="small"
-                                                onClick={() => handleRejectPermission(employer.id)}
-                                        >
-                                            Reject
-                                        </Button>
-                                    </>
-                                )}
-                            {update && update.status !== 'Pending' && (
-                                    <Typography variant="body2" sx={{ color: 'gray' }}>
-                                        ({update.status})
-                                    </Typography>
-                                )}
-                            </TableCell>
-                            </TableRow>
-                            );
+                                                onClick={() => handlePermissionAction(employer.id, 'Rejected')}
+                                            >
+                                                Reject
+                                            </Button>
+                                            </TableCell>
+                                            <TableCell>
+                                                {employer.permissionStatus !== 'Pending' && (
+                                                    <Typography variant="body2" sx={{ color: 'white' }}>
+                                                        {employer.permissionStatus}
+                                                    </Typography>
+                                                )}
+                                            </TableCell>
+                                    </TableRow>
+                                );
                             })}
                         </TableBody>
                     </Table>
@@ -168,5 +142,4 @@ export default function ApproveOffDayRequests() {
             </Container>
         </div>
     );
-}
-
+};
