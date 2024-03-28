@@ -20,4 +20,8 @@ export default class EmployerService {
   getCvInfo() {
     return axios.get("http://localhost:8000/utils/cvinfo/")
   }
+
+  getOffDayReq() {
+    return axios.get("http://localhost:8000/utils/offdayreq/")
+  }
 }

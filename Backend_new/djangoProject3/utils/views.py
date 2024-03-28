@@ -51,3 +51,26 @@ def off_day(request):
     print(ai_response)
     return Response(ai_response)
 
+@api_view(['GET'])
+def off_day_requests(request):
+    employee = Employee.objects.get(employee_id=2)
+    requests = OffDayRequest.objects.filter(requested_by=employee)
+
+    used_days = 0
+    for request in requests:
+        if request.approved is True:
+            used_days += request.duration
+        if request.timestamp < timezone.now():
+            request.timeout = False
+            request.save()
+    curr = requests.filter(seen__exact=False, timeout__exact=False).last()
+
+    curr_serializer = OffDayRequestSerializer(curr, many=False)
+
+    combined_data = {
+        'used_off_days': used_days,
+        'current_request': curr_serializer.data,
+    }
+
+    return Response(combined_data)
+
