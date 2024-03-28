@@ -13,7 +13,11 @@ export default class EmployerService {
     return axios.get("http://localhost:8000/employee/dashboard/"+id)
   }
 
-  getEmployerOddDayById(id) {
+  getEmployerOffDayById(id) {
     return axios.get("http://localhost:8000/employee/dayoff/"+id)
+  }
+
+  getCvInfo() {
+    return axios.get("http://localhost:8000/utils/cvinfo/")
   }
 }

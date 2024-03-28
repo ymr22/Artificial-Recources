@@ -66,10 +66,5 @@ def get_employee_off_day_requests(request, pk):
         'current_request': curr_serializer.data,
     }
 
-
-
-    ai_response = ai_query("I have used " + str(used_days) + " of holidays from my available " + str(curr.allowed_off_days) +
-                           " days and I want am putting a new off-day request with the reason " + curr.reason + ". Do you approve?")
-    print(ai_response)
     return Response(combined_data)
 

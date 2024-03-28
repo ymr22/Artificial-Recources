@@ -7,62 +7,26 @@ import {
     Accordion,
     AccordionSummary,
     AccordionDetails,
-    TextField
+    TextField, Button
 } from '@mui/material';
-
-const data = [
-    {
-        id: 1,
-        name: 'Ahmet Yılmaz',
-        email: 'ahmet.yilmaz@example.com',
-        position: 'Yazılım Geliştirici',
-        aiScore: 78,
-        status: 'Değerlendiriliyor',
-    },
-    {
-        id: 2,
-        name: 'Ayşe Öztürk',
-        email: 'ayse.ozturk@example.com',
-        position: 'Pazarlama Uzmanı',
-        aiScore: 85,
-        status: 'Mülakata Çağrıldı',
-    },
-    {
-        id: 3,
-        name: 'Mehmet Demir',
-        email: 'mehmet.demir@example.com',
-        position: 'Grafik Tasarımcı',
-        aiScore: 65,
-        status: 'Reddedildi',
-    },
-    {
-        id: 4,
-        name: 'Fatma Gül',
-        email: 'fatma.gul@example.com',
-        position: 'Müşteri Hizmetleri Temsilcisi',
-        aiScore: 92,
-        status: 'Değerlendiriliyor',
-    },
-    {
-        id: 5,
-        name: 'Cevdet Can',
-        email: 'cevd.can@example.com',
-        position: 'Satış Uzmanı',
-        aiScore: 72,
-        status: 'Değerlendiriliyor',
-    },
-];
+import axios from "axios";
+import EmployerService from "../../services/EmployerService";
 
 const CVScan = () => {
-    const [candidates, setCandidates] = useState(data);
+    const [candidates, setCandidates] = useState([]);
+    const [response, setResponse] = useState("");
 
-    useEffect(() => {
-        // Gerçek API'den başvuru verilerini ve AI taraması sonuçlarını alın (burada örnek veriler kullanılıyor)
+    useEffect( () => {
+        let employerService = new EmployerService();
+        employerService.getCvInfo(2).then((result) => setCandidates(result.data)).catch();
+        employerService.getCvInfo(2).then((result) => console.log(result.data)).catch();
+        handleInterviewDecision()
     }, []);
 
-    const handleInterviewDecision = (candidateId, decision) => {
-        // Gerçek API ile mülakata çağırma/reddetme işlemini gerçekleştirin
-        // Başarılıysa, adayın durumunu güncelleyin
+    const handleInterviewDecision = async () => {
+        const data = await axios.get("http://localhost:8000//utils/cvscan/")
+        setResponse(data.data);
+        console.log(response)
     };
 
     return (
@@ -70,25 +34,24 @@ const CVScan = () => {
             <Typography variant="h4" component="h2" sx={{p: 3, marginLeft: 30}}>
                 Applicant CVs:
             </Typography>
+
             <Box sx={{ p: 2, marginLeft: 40 }}>
                 <Paper>
                     {candidates.map((candidate) => (
-                        <Accordion key={candidate.id}>
+                        <Accordion key={candidate.id}  sx={{ mt: 3 }}>
                             <AccordionSummary>
                                 <Grid sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                                    <Typography variant="h6">{candidate.name}</Typography>
-                                    <Typography>E-posta: {candidate.email}</Typography>
-                                    <Typography>Pozisyon: {candidate.position}</Typography>
-                                    <Typography>AI Puanı: {candidate.aiScore}</Typography>
+                                    <Typography variant="h6">{candidate.name + " " + candidate.surname}</Typography>
                                 </Grid>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <TextField
-                                    multiline
-                                    fullWidth
-                                    rows={4}
-                                    placeholder="Notlar..."
-                                />
+                                <Typography sx={{ lineHeight: 3 }}>Pozisyon: {candidate.telephone}</Typography>
+                                <Typography sx={{ lineHeight: 3 }}>E-posta: {candidate.email}</Typography>
+                                <Typography sx={{ lineHeight: 3 }}>E-posta: {candidate.skills}</Typography>
+                                <Typography sx={{ lineHeight: 3 }}>E-posta: {candidate.experience}</Typography>
+                                <Typography sx={{ lineHeight: 3 }}>E-posta: {candidate.projects}</Typography>
+                                <Typography sx={{ lineHeight: 3 }}>Pozisyon: {candidate.interests}</Typography>
+                                <Typography sx={{ lineHeight: 2 }}>AI Puanı: {response}</Typography>
                             </AccordionDetails>
                         </Accordion>
                     ))}

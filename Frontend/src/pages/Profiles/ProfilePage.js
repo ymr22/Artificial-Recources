@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Container, Typography, TextField, Button, Avatar, Grid, Box } from '@mui/material';
+import EmployerService from "../../services/EmployerService";
 
 const ProfilePage = () => {
-    const [user, setUser] = useState({
-        firstName: "Ahmet",
-        email: "ahmet@example.com",
-        phone: "555-1234",
-        department: "IT",
-        workDuration: "2 yıl",
-        employeeId: "12345"
-    });
+    const [user, setUser] = useState([]);
+
+    useEffect(() => {
+        let employerService = new EmployerService();
+        console.log(employerService.getEmployerById(2))
+        employerService.getEmployerById(2).then((result) => setUser(result.data)).catch();
+    }, []);
 
     const handleChange = (prop) => (event) => {
         setUser({ ...user, [prop]: event.target.value });

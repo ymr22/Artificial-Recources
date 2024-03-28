@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils import timezone
 from employee.models import Employee
@@ -11,10 +12,19 @@ class Message(models.Model):
     is_deleted = models.BooleanField(default=False)
 
 
-class CV(models.Model):
-    content = models.TextField(max_length=500)
-    belongs_to = models.ForeignKey(Employee, on_delete=models.DO_NOTHING)
-    is_deleted = models.BooleanField(default=False)
+class CVInfo(models.Model):
+    name = models.CharField(max_length=100)
+    surname = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100)
+    telephone = models.CharField(max_length=15, null=True, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
+    previous_jobs = ArrayField(models.CharField(max_length=100, null=True, blank=True))
+    education = ArrayField(models.CharField(max_length=100, null=True, blank=True))
+    experience = ArrayField(models.CharField(max_length=100, null=True, blank=True))
+    skills = ArrayField(models.CharField(max_length=100, null=True, blank=True))
+    projects = ArrayField(models.CharField(max_length=100, null=True, blank=True))
+    interests = ArrayField(models.CharField(max_length=100, null=True, blank=True))
+    is_deleted = models.BooleanField(default=False, null=True, blank=True)
 
 
 class OffDayRequest(models.Model):

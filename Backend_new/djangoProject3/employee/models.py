@@ -12,7 +12,7 @@ class Employee(models.Model):
     email = models.EmailField(null=True, blank=True)
     department = models.CharField(choices=DEPARTMENT_CHOICES)
     work_duration = models.IntegerField(null=True, blank=True)
-    phone = models.IntegerField(null=True, blank=True)
+    phone = models.CharField(null=True, blank=True)
     # title = models.CharField(choices=TITLES, null=True, blank=True)
 
     def __str__(self):

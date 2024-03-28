@@ -17,17 +17,11 @@ import EmployerService from '../../services/EmployerService';
 import axios from 'axios';
 
 export default function EmployerList() {
-  const [message, setMessage] = useState('');
-
-
-
-
-
-  const [employers, setEmployers] = useState([{employee_id: "aaa", user:{'email': "kflsjdlkfj"}, first_name:"", middle_name:"", surname:""}]);
+  const [employers, setEmployers] = useState([]);
 
   useEffect(() => {
     let employerService = new EmployerService();
-
+    console.log(employerService.getEmployers())
     employerService.getEmployers().then((result) => setEmployers(result.data)).catch();
   }, []);
 
@@ -47,24 +41,22 @@ export default function EmployerList() {
           <Table sx={{minWidth: 700, maxWidth: 1250, marginLeft: 35}}>
             <TableHead>
               <TableRow>
-                <TableCell>Company Name</TableCell>
+                <TableCell>Department</TableCell>
+                <TableCell>Name</TableCell>
                 <TableCell>Phone Number</TableCell>
                 <TableCell>Email</TableCell>
-                <TableCell>Joined Date</TableCell>
+                <TableCell>Work Duration(year)</TableCell>
                 <TableCell>Calendar</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {employers.map((employer) => (
                   <TableRow key={employer.employee_id}>
-                    <TableCell>
-                      <Typography variant="body1" component="p">
-                        {employer.companyName}
-                      </Typography>
-                    </TableCell>
-                    <TableCell>{employer.first_name}</TableCell>
-                    <TableCell>{employer.middle_name}</TableCell>
-                    <TableCell>{employer.surname}</TableCell>
+                    <TableCell>{employer.employee_id}</TableCell>
+                    <TableCell>{employer.first_name + " " + employer.last_name}</TableCell>
+                    <TableCell>{employer.phone}</TableCell>
+                    <TableCell>{employer.email}</TableCell>
+                    <TableCell>{employer.work_duration}</TableCell>
                     <TableCell>
                       <Button
                           variant="outlined"

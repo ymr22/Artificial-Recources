@@ -9,35 +9,29 @@ import {
     InputAdornment, Container, TableContainer,
 } from '@mui/material';
 import axios from 'axios';
+import EmployerService from "../../services/EmployerService";
 
 export default function OffDay() {
-    const [employers, setEmployers] = useState([]);
+    const [employee, setEmployee] = useState([]);
     const [selectedUser, setSelectedUser] = useState('');
     const [requestedDays, setRequestedDays] = useState('');
-    const [permissionStatus, setPermissionStatus] = useState('');
+    const [requestedDayReason, setRequestedDayReason] = useState("");
+    const [permissionStatus, setPermissionStatus] = useState("");
 
     useEffect(() => {
-        // Fetch employer data with permission details (replace with actual API call)
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:8000/employers');
-                const modifiedData = response.data.map((employer) => ({
-                    ...employer,
-                    remainingPermissionDays: Math.floor(Math.random() * 10), // Replace with actual calculation
-                    usedPermissionDays: Math.floor(Math.random() * (employer.remainingPermissionDays + 1)), // Simulate used days (ensure less than or equal to remaining)
-                }));
-                setEmployers(modifiedData);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchData();
+        let employerService = new EmployerService();
+        console.log(employerService.getEmployerOffDayById(2))
+        employerService.getEmployerOffDayById(2).then((result) => setEmployee(result.data)).catch();
+
     }, []);
 
-    const handleRequestPermission = () => {
+    const handleRequestPermission = async () => {
+        let employerService = new EmployerService();
         // Handle permission request logic here (e.g., call API or display confirmation)
         console.log(`Requesting ${requestedDays} permission days for employer ${selectedUser}`);
-        setPermissionStatus('Pending'); // Simulate API response and update status
+        const response = await axios.get("http://localhost:8000//utils/offday/");
+        console.log(response)
+        setPermissionStatus(response.data)
     };
 
     return (
@@ -49,19 +43,12 @@ export default function OffDay() {
             <Box sx={{ p: 2, mb: 2, width: 400}}>
                     <Grid container spacing={3} sx={{ p: 2, mb: 2, width: 600}}>
                         <Typography variant="h5">
-                            Kalan İzin Sayısı :
-                        </Typography>
-                        <Typography variant="h4" sx={{ fontWeight: 'bold', fontSize: 22, color:'blueGrey' }}>
-                            {  2}
-                            {selectedUser && employers.find((e) => e.id === selectedUser)?.remainingPermissionDays}
+                            Kalan İzin Sayısı : {employee.current_request - employee.used_off_days}
                         </Typography>
                     </Grid>
                     <Grid container spacing={3} sx={{ p: 2, mb: 2, width: 600}}>
                         <Typography variant="h5">
-                            Kullanılan İzin Sayısı: {selectedUser && employers.find((e) => e.id === selectedUser)?.usedPermissionDays}
-                        </Typography>
-                        <Typography variant="h4" sx={{ fontWeight: 'bold', fontSize: 22, color:'blueGrey' }}>
-                            {selectedUser && employers.find((e) => e.id === selectedUser)?.usedPermissionDays}
+                            Kullanılan İzin Sayısı: {employee.used_off_days}
                         </Typography>
                     </Grid>
                     <Grid container spacing={3} sx={{ p: 2, mb: 2, width: 300}}>
@@ -83,26 +70,21 @@ export default function OffDay() {
                                 ),
                             }}
                         />
+                        <TextField
+                            label="İzin Mazereti"
+                            type="text"
+                            variant="outlined"
+                            value={requestedDayReason}
+                            sx={{ mb: 2, width: '100%', mt:2 }}
+                            onChange={(e) => setRequestedDayReason(e.target.value)}
+                        />
                         <Button variant="contained" color="primary" onClick={handleRequestPermission}>
                             İzin Talebini Gönder
                         </Button>
                         <Typography variant="h5" sx={{ lineHeight: 4 }}>
                             İzin Talep Durumu:
                         </Typography>
-                        {permissionStatus && (
-                            <Paper sx={{ mt: 2, p: 2, display: 'flex', alignItems: 'center', minWidth:150 }}>
-                                {permissionStatus === 'Pending' ? (
-                                    <h4>Pending...</h4>
-                                ) : permissionStatus === 'Approved' ? (
-                                    <>
-                                        <Typography variant="body1">İzin Talebiniz Onaylandı!</Typography>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Typography variant="body1">İzin Talebiniz Reddedildi.</Typography>
-                                    </>
-                                )}
-                            </Paper>)}
+                        {permissionStatus}
                     </Grid>
                 </Box>
             </TableContainer>

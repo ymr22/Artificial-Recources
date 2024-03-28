@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-h%uriac4ft775fvba+9#kj!i-aaz3m%8n*z=#zxgn9b9wz5-d_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
@@ -143,7 +143,10 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+INTERNAL_IPS = [
+    # ... existing internal IP addresses
+    '127.0.0.1',  # Add localhost for proxy
+]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
