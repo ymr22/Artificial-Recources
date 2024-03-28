@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'google.generativeai',
     'corsheaders',
-    'vertexai',
 ]
 
 MIDDLEWARE = [
@@ -96,9 +95,9 @@ WSGI_APPLICATION = 'djangoProject3.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'HRMS',
+        'NAME': 'deneme',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': '1806',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }

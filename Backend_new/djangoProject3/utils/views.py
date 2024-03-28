@@ -1,7 +1,13 @@
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
 from django.shortcuts import render
 from django.utils import timezone
-from rest_framework.decorators import api_view
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
 from employee.models import Employee
+from rest_framework.permissions import AllowAny
+
 from .models import CVInfo, OffDayRequest
 from .serializers import CVSerializer, OffDayRequestSerializer
 from vertex_ai.app import cv_model_predict, offDay_model_predict
@@ -42,11 +48,6 @@ def off_day(request):
 
     curr_serializer = OffDayRequestSerializer(curr, many=False)
 
-    combined_data = {
-        'used_off_days': used_days,
-        'current_request': curr_serializer.data,
-    }
-
     ai_response = offDay_model_predict(curr_serializer.data, used_days)
     print(ai_response)
     return Response(ai_response)
@@ -74,3 +75,14 @@ def off_day_requests(request):
 
     return Response(combined_data)
 
+@api_view(['POST'])
+def cv_commit(request):
+    serializer = CVSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers={'X-CSRFToken': csrf_token})
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST, headers={'X-CSRFToken': csrf_token})
+
+def get_csrf_token(request):
+    csrf_token = get_token(request)
+    return JsonResponse({'csrf_token': csrf_token})
