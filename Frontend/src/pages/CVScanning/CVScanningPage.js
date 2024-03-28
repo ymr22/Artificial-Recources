@@ -16,21 +16,12 @@ const CVScan = () => {
     const [candidates, setCandidates] = useState([]);
     const [response, setResponse] = useState("");
 
-    useEffect( async () => {
+    useEffect(  () => {
         let employerService = new EmployerService();
         employerService.getCvInfo(2).then((result) => setCandidates(result.data)).catch();
         employerService.getCvInfo(2).then((result) => console.log(result.data)).catch();
         handleInterviewDecision()
 
-        const response = await fetch('http://localhost:8000/utils/cvcommit/', {
-            method: 'POST',
-            body: JSON.stringify(candidates),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        const result = await response.json();
-        console.log(result);
     }, []);
 
     const handleInterviewDecision = async () => {
