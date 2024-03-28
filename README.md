@@ -12,10 +12,12 @@ Yağmur Üstel - Nisa Nilay Demirci
 ### How to use:
 - git clone https://github.com/ymr22/Bil496.git
   
-1- cd frontend
+1
+ - cd frontend
  - npm install
  - npm start
 
-2- cd Backend_New
- - cd djangoProject3
- - python manage.py runserver 
+2
+  - cd Backend_New
+  - cd djangoProject3
+  - python manage.py runserver 
