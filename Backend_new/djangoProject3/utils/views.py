@@ -80,8 +80,8 @@ def cv_commit(request):
     serializer = CVSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers={'X-CSRFToken': csrf_token})
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST, headers={'X-CSRFToken': csrf_token})
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers={'X-CSRFToken': get_csrf_token(request)})
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST, headers={'X-CSRFToken': get_csrf_token(request)})
 
 def get_csrf_token(request):
     csrf_token = get_token(request)

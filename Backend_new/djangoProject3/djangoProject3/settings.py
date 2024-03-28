@@ -95,9 +95,9 @@ WSGI_APPLICATION = 'djangoProject3.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'deneme',
+        'NAME': 'HRMS',
         'USER': 'postgres',
-        'PASSWORD': '1806',
+        'PASSWORD': 'postgres',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
