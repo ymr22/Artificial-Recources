@@ -45,13 +45,14 @@ const CVScan = () => {
                                 </Grid>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <Typography sx={{ lineHeight: 3 }}>Pozisyon: {candidate.telephone}</Typography>
+                                <Typography sx={{ lineHeight: 3 }}>Pozisyon: Backend Developer</Typography>
+                                <Typography sx={{ lineHeight: 3 }}>Telefon: {candidate.telephone}</Typography>
                                 <Typography sx={{ lineHeight: 3 }}>E-posta: {candidate.email}</Typography>
-                                <Typography sx={{ lineHeight: 3 }}>E-posta: {candidate.skills}</Typography>
-                                <Typography sx={{ lineHeight: 3 }}>E-posta: {candidate.experience}</Typography>
-                                <Typography sx={{ lineHeight: 3 }}>E-posta: {candidate.projects}</Typography>
-                                <Typography sx={{ lineHeight: 3 }}>Pozisyon: {candidate.interests}</Typography>
-                                <Typography sx={{ lineHeight: 2 }}>AI Puanı: {response}</Typography>
+                                <Typography sx={{ lineHeight: 3 }}>Yetenekler: {candidate.skills}</Typography>
+                                <Typography sx={{ lineHeight: 3 }}>Deneyimler: {candidate.experience}</Typography>
+                                <Typography sx={{ lineHeight: 3 }}>Projeler: {candidate.projects}</Typography>
+                                <Typography sx={{ lineHeight: 3 }}>İlgi Alanları: {candidate.interests}</Typography>
+                                <Typography sx={{ lineHeight: 2 }}>AI Yorumu: {response}</Typography>
                             </AccordionDetails>
                         </Accordion>
                     ))}
