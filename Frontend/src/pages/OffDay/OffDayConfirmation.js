@@ -12,6 +12,8 @@ import {
     Container,
     TableBody,
 } from '@mui/material';
+import EmployerService from "../../services/EmployerService";
+import axios from "axios";
 
 const EXAMPLE_EMPLOYEES = [
     {
@@ -41,35 +43,33 @@ const EXAMPLE_EMPLOYEES = [
 ];
 
 export default function ApproveOffDayRequests() {
-    const [employers, setEmployers] = useState(EXAMPLE_EMPLOYEES);
+    const [requests, setRequests] = useState([]);
+    const [used_days, setUsedDays] = useState();
+    const [employee, setEmployee] = useState([]);
     const [permissionStatusUpdates, setPermissionStatusUpdates] = useState([]);
     const selectedActionRef = useRef('');
+    const [permissionStatus, setPermissionStatus] = useState("");
+    const [selected, setSelected] = useState("");
+
+    useEffect(async () => {
+        let employerService = new EmployerService();
+        employerService.getOffDayReq().then((result) => console.log(result.data)).catch();
+        employerService.getOffDayReq().then((result) => setRequests(result.data.current_request)).catch();
+        employerService.getOffDayReq().then((result) => setUsedDays(result.data.used_off_days)).catch();
+        employerService.getEmployerById(2).then((result) => setEmployee(result.data)).catch();
+        const response = await axios.get("http://localhost:8000//utils/offday/");
+        console.log(response)
+        setPermissionStatus(response.data)
+    }, []);
 
     const handlePermissionAction = async (employeeId, action) => {
+
+
         // Simulate API call
         console.log(`Taking action "${action}" for employee ${employeeId}`);
-        setEmployers(
-            employers.map((employer) =>
-                employer.id === employeeId ? { ...employer, permissionStatus: action } : employer
-            )
-        );
-        setPermissionStatusUpdates([
-            ...permissionStatusUpdates,
-            {
-                employeeId,
-                status: action,
-            },
-        ]);
-        selectedActionRef.current = action;
-    };
 
-    useEffect(() => {
-        // `selectedActionRef`'in güncel değerini kullanarak render işlemini tetikle
-        const selectedAction = selectedActionRef.current;
-        if (selectedAction !== '') {
-            // ...
-        }
-    }, [selectedActionRef]);
+        setSelected(action);
+    };
 
     return (
         <div>
@@ -85,57 +85,52 @@ export default function ApproveOffDayRequests() {
                                 <TableCell>Remaining Permission Days</TableCell>
                                 <TableCell>Used Permission Days</TableCell>
                                 <TableCell>Requested Days</TableCell>
+                                <TableCell>Reason</TableCell>
+                                <TableCell>Ai Response</TableCell>
                                 <TableCell>Actions</TableCell>
                                 <TableCell>Selected Action</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {employers.map((employer) => {
-                                const update = permissionStatusUpdates.find((u) => u.employeeId === employer.id);
-                                const statusText = update ? update.status : employer.permissionStatus;
-
-                                return (
-                                    <TableRow key={employer.id}>
-                                        <TableCell>{employer.name}</TableCell>
-                                        <TableCell>{employer.remainingPermissionDays}</TableCell>
-                                        <TableCell>{employer.usedPermissionDays}</TableCell>
-                                        <TableCell>{employer.requestedDays}</TableCell>
-                                        <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                color="success"
-                                                size="small"
-                                                onClick={() => handlePermissionAction(employer.id, 'Approved')}
-                                            >
-                                                Approve
-                                            </Button>
-                                            <Button
-                                                variant="contained"
-                                                color="warning"
-                                                size="small"
-                                                onClick={() => handlePermissionAction(employer.id, 'Reviewing')}
-                                            >
-                                                Review
-                                            </Button>
-                                            <Button
-                                                variant="contained"
-                                                color="error"
-                                                size="small"
-                                                onClick={() => handlePermissionAction(employer.id, 'Rejected')}
-                                            >
-                                                Reject
-                                            </Button>
-                                            </TableCell>
-                                            <TableCell>
-                                                {employer.permissionStatus !== 'Pending' && (
-                                                    <Typography variant="body2" sx={{ color: 'white' }}>
-                                                        {employer.permissionStatus}
-                                                    </Typography>
-                                                )}
-                                            </TableCell>
-                                    </TableRow>
-                                );
-                            })}
+                            <TableRow key={requests.id}>
+                                <TableCell>{employee.name + " " +  employee.surname}</TableCell>
+                                <TableCell>{requests.allowed_off_days}</TableCell>
+                                <TableCell>{used_days}</TableCell>
+                                <TableCell>{requests.duration}</TableCell>
+                                <TableCell>{requests.reason}</TableCell>
+                                <TableCell>{permissionStatus}</TableCell>
+                                <TableCell>
+                                    <Button
+                                        variant="contained"
+                                        color="success"
+                                        size="small"
+                                        onClick={() => handlePermissionAction(requests.id, 'Approved')}
+                                    >
+                                        Approve
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="warning"
+                                        size="small"
+                                        onClick={() => handlePermissionAction(requests.id, 'Reviewing')}
+                                    >
+                                        Review
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="error"
+                                        size="small"
+                                        onClick={() => handlePermissionAction(requests.id, 'Rejected')}
+                                    >
+                                        Reject
+                                    </Button>
+                                </TableCell>
+                                <TableCell>
+                                    <Typography variant="body2" sx={{ color: 'white' }}>
+                                        {selected}
+                                    </Typography>
+                                </TableCell>
+                            </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>

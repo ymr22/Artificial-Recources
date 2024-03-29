@@ -14,11 +14,16 @@ def cv_model_predict(query):
     model = TextGenerationModel.from_pretrained("text-bison@001")
     model = model.get_tuned_model("projects/267233172569/locations/europe-west2/models/6937540139266605056")
 
-    response = model.predict(
+    response1 = model.predict(
         f""" {query} Is this applicant is suitable for the backend developer position?""",
         **parameters
     )
-    return response.text
+
+    response2 = model.predict(
+        f""" {query} Is this applicant is suitable for the frontend developer position?""",
+        **parameters
+    )
+    return response1.text + "\n\n" + response2.text
 
 
 def offDay_model_predict(query, used_off_days):
