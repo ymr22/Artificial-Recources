@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'google.generativeai',
     'corsheaders',
-    'vertexai',
 ]
 
 MIDDLEWARE = [

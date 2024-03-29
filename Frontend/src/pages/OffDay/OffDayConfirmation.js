@@ -57,6 +57,7 @@ export default function ApproveOffDayRequests() {
         employerService.getOffDayReq().then((result) => setRequests(result.data.current_request)).catch();
         employerService.getOffDayReq().then((result) => setUsedDays(result.data.used_off_days)).catch();
         employerService.getEmployerById(2).then((result) => setEmployee(result.data)).catch();
+        employerService.getEmployerById(2).then((result) => console.log(result.data)).catch();
         const response = await axios.get("http://localhost:8000//utils/offday/");
         console.log(response)
         setPermissionStatus(response.data)

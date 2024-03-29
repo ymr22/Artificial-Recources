@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Box,
     Typography,
@@ -14,6 +14,9 @@ import {
 } from '@mui/material';
 import './ApplyForm.css';
 import axios from "axios";
+import EmployerService from "../../services/EmployerService";
+import Cookies from 'js-cookie';
+
 const ApplyJob = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -29,6 +32,7 @@ const ApplyJob = () => {
         interests: [],
     });
 
+    const [candidates, setCandidates] = useState([]);
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -87,6 +91,29 @@ const ApplyJob = () => {
         }
     };
 
+    useEffect(  () => {
+        let employerService = new EmployerService();
+        employerService.getCvInfo(2).then((result) => setCandidates(result.data)).catch();
+        handlePost()
+    }, []);
+
+    const handlePost = async () => {
+
+        const response = await fetch('http://localhost:8000/utils/cvcommit/', {
+            method: 'POST',
+            body: JSON.stringify(formData),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': Cookies.get('X-CSRFToken')
+            }
+        }).then(response => {
+            // Handle response
+        }).catch(error => {
+            console.log(error)
+        });
+        const result = await response.json();
+        console.log("----------" + result);
+    }
     const addEducation = () => {
         setFormData({
             ...formData,
