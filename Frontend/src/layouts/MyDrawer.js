@@ -3,13 +3,10 @@ import {
     Box,
     Drawer,
     List,
-    ListItemButton, ListItemText, ListItemIcon, Container, Typography,
+    ListItemButton, ListItemText, ListItemIcon
     // other imports
 } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
-import JobList from "../pages/Jobs/JobList";
-import EmployerList from "../pages/Employers/EmployerList";
-import ProfilePage from "../pages/Profiles/ProfilePage";
 
 export default function MyDrawer() {
 

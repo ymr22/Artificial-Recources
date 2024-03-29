@@ -94,7 +94,7 @@ export default function ApproveOffDayRequests() {
                         </TableHead>
                         <TableBody>
                             <TableRow key={requests.id}>
-                                <TableCell>{employee.first_name + " " +  employee.last_name}</TableCell>
+                                <TableCell>{employee.name + " " +  employee.surname}</TableCell>
                                 <TableCell>{requests.allowed_off_days}</TableCell>
                                 <TableCell>{used_days}</TableCell>
                                 <TableCell>{requests.duration}</TableCell>
@@ -125,12 +125,12 @@ export default function ApproveOffDayRequests() {
                                     >
                                         Reject
                                     </Button>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Typography variant="body2" sx={{ color: 'white' }}>
-                                            {selected}
-                                        </Typography>
-                                    </TableCell>
+                                </TableCell>
+                                <TableCell>
+                                    <Typography variant="body2" sx={{ color: 'white' }}>
+                                        {selected}
+                                    </Typography>
+                                </TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
