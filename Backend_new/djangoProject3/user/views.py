@@ -1,8 +1,12 @@
 from django.contrib.auth import login, logout
+from django.contrib.auth.models import User
 from rest_framework import permissions, status, generics
 from rest_framework import views
 from rest_framework.response import Response
 from . import serializers
+from rest_framework.permissions import IsAuthenticated
+
+from .serializers import ChangePasswordSerializer
 
 
 class LoginView(views.APIView):
@@ -14,6 +18,7 @@ class LoginView(views.APIView):
                                                  context={ 'request': self.request })
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
+        user.save()
         login(request, user)
         return Response(None, status=status.HTTP_202_ACCEPTED)
 
@@ -29,3 +34,10 @@ class ProfileView(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+
+    queryset = User.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ChangePasswordSerializer
