@@ -95,6 +95,6 @@ def get_csrf_token(request):
     return JsonResponse({'csrf_token': csrf_token})
 
 @api_view(['GET'])
-def off_day(request):
-    ai_response = calendar_predict()
+def calendar(request):
+    ai_response = calendar_predict(request)
     return Response(ai_response)

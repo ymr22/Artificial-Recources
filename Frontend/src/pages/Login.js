@@ -7,7 +7,7 @@ import axios from "axios";
 
 //////////////////////////////////
 const RootStyle = styled("div")({
-  background: "rgb(44,40,40)",
+  background: "rgb(24,22,22)",
   height: "100vh",
   display: "grid",
   placeItems: "center",
@@ -24,7 +24,7 @@ const ContentStyle = styled("div")({
   display: "flex",
   justifyContent: "center",
   flexDirection: "column",
-  background: "rgba(84,101,131,0.63)",
+  background: "rgb(67,35,100)",
 });
 
 let easing = [0.6, -0.05, 0.01, 0.99];

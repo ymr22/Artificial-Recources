@@ -6,10 +6,11 @@ import {
     TextField,
     Grid,
     Paper,
-    InputAdornment, Container, TableContainer,
+    InputAdornment, Container, TableContainer, Divider,
 } from '@mui/material';
 import axios from 'axios';
 import EmployerService from "../../services/EmployerService";
+import {motion} from "framer-motion";
 
 export default function OffDay() {
     const [employee, setEmployee] = useState([]);
@@ -24,15 +25,11 @@ export default function OffDay() {
         console.log(employerService.getEmployerOffDayById(8))
         employerService.getEmployerOffDayById(8).then((result) => setEmployee(result.data)).catch();
         employerService.getEmployerOffDayById(8).then((result) => setRemainedDays(result.data.current_request.allowed_off_days- result.data.used_off_days)).catch();
-        console.log(remainedDays)
     }, []);
 
     const handleRequestPermission = async () => {
-        let employerService = new EmployerService();
-        // Handle permission request logic here (e.g., call API or display confirmation)
         console.log(`Requesting ${requestedDays} permission days for employer ${selectedUser}`);
         const response = await axios.get("http://localhost:8000//utils/offday/");
-        console.log(response)
         setPermissionStatus(response.data)
     };
 
@@ -42,8 +39,11 @@ export default function OffDay() {
             <Typography variant="h4" component="h2" sx={{p: 3, marginLeft: 30}}>
                 Off-Day Request:
             </Typography>
+
+            <Divider sx={{ my: 3 }} component={motion.div}></Divider>
+
             <TableContainer component={Paper} maxWidth="sm" sx={{marginLeft: 40, maxWidth:600}}>
-            <Box sx={{ p: 2, mb: 2, width: 400}}>
+            <Grid sx={{ p: 2, mb: 2, width: 400}}>
                     <Grid container spacing={3} sx={{ p: 2, mb: 2, width: 600}}>
                         <Typography variant="h5">
                             Kalan İzin Sayısı : {remainedDays}
@@ -54,6 +54,9 @@ export default function OffDay() {
                             Kullanılan İzin Sayısı: {employee.used_off_days}
                         </Typography>
                     </Grid>
+
+                    <Divider sx={{ my: 3 }} component={motion.div}></Divider>
+
                     <Grid container spacing={3} sx={{ p: 2, mb: 2, width: 300}}>
                         <Typography variant="h5">
                             İzin Talebi:
@@ -84,12 +87,14 @@ export default function OffDay() {
                         <Button variant="contained" color="primary" onClick={handleRequestPermission}>
                             İzin Talebini Gönder
                         </Button>
+
+
                         <Typography variant="h5" sx={{ lineHeight: 4 }}>
                             İzin Talep Durumu:
                         </Typography>
                         {permissionStatus}
                     </Grid>
-                </Box>
+                </Grid>
             </TableContainer>
             </form>
         </div>

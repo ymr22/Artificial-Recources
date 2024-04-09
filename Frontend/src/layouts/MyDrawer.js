@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Box,
     Drawer,
@@ -7,29 +7,32 @@ import {
     // other imports
 } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom';
+import EmployerService from "../services/EmployerService";
 
 export default function MyDrawer() {
 
-    const navigate = useNavigate();
-    const [selectedComponent, setSelectedComponent] = useState(null);
+    const [isSupervisor, setIsSupervisor] = useState(false);
+    const [selectedComponent, setSelectedComponent] = useState();
+
+    useEffect(() => {
+        let employerService = new EmployerService();
+        employerService.getEmployerById(8).then((result) => setIsSupervisor(result.data.is_supervisor)).catch();
+    }, []);
     const handleListItemClick = (component) => {// Navigate based on chosen component
+        setSelectedComponent(component)
     };
 
     return (
         <div style={{ backgroundColor: 'white' }}>
-
             <Drawer anchor="left" open={true} variant="persistent">
                 <Box sx={{ width: 240, p: 2 }}>
                     <List>
                         <ListItemButton
                             component={Link}
                             to="/dashboard"
-                            selected={selectedComponent === null}
-                            onClick={() => handleListItemClick(null)} // Handle Home click
+                            selected={selectedComponent === 'dashboard'}
+                            onClick={() => handleListItemClick('dashboard')} // Handle Home click
                         >
-                            <ListItemIcon>
-                                {/* Add your home icon here */}
-                            </ListItemIcon>
                             <ListItemText primary="Dashboard" />
                         </ListItemButton>
                         <ListItemButton
@@ -38,9 +41,6 @@ export default function MyDrawer() {
                             selected={selectedComponent === 'profile'}
                             onClick={() => handleListItemClick('profile')} // Handle Employees click
                         >
-                            <ListItemIcon>
-                                {/* Add your employees icon here */}
-                            </ListItemIcon>
                             <ListItemText primary="Profile" />
                         </ListItemButton>
                         <ListItemButton
@@ -49,9 +49,6 @@ export default function MyDrawer() {
                             selected={selectedComponent === 'employers'}
                             onClick={() => handleListItemClick('employers')} // Handle Employees click
                         >
-                            <ListItemIcon>
-                                {/* Add your employees icon here */}
-                            </ListItemIcon>
                             <ListItemText primary="Employees" />
                         </ListItemButton>
                         <ListItemButton
@@ -60,9 +57,6 @@ export default function MyDrawer() {
                             selected={selectedComponent === 'offDay'}
                             onClick={() => handleListItemClick('offDay')} // Handle Employees click
                         >
-                            <ListItemIcon>
-                                {/* Add your employees icon here */}
-                            </ListItemIcon>
                             <ListItemText primary="Off-Day Request" />
                         </ListItemButton>
                         <ListItemButton
@@ -71,42 +65,41 @@ export default function MyDrawer() {
                             selected={selectedComponent === 'learningMaterial'}
                             onClick={() => handleListItemClick('learningMaterial')} // Handle Employees click
                         >
-                            <ListItemIcon>
-                                {/* Add your employees icon here */}
-                            </ListItemIcon>
                             <ListItemText primary="Learning Material" />
                         </ListItemButton>
-                        <ListItemButton
-                            component={Link}
-                            to="/cvscan" // Assuming path for EmployerList
-                            selected={selectedComponent === 'CVScanning'}
-                            onClick={() => handleListItemClick('CVScanning')} // Handle Employees click
-                        >
-                            <ListItemIcon>
-                                {/* Add your employees icon here */}
-                            </ListItemIcon>
-                            <ListItemText primary="CV Scan" />
-                        </ListItemButton>
-                        <ListItemButton
-                            component={Link}
-                            to="/offDayConfirm" // Assuming path for EmployerList
-                            selected={selectedComponent === 'OffDayConfirmation'}
-                            onClick={() => handleListItemClick('OffDayConfirmation')} // Handle Employees click
-                        >
-                            <ListItemIcon>
-                                {/* Add your employees icon here */}
-                            </ListItemIcon>
-                            <ListItemText primary="Off-Day Approval" />
-                        </ListItemButton>
+
+                        {isSupervisor && (
+                            <>
+                                <ListItemButton
+                                    component={Link}
+                                    to="/cvscan" // Assuming path for EmployerList
+                                    selected={selectedComponent === 'CVScanning'}
+                                    onClick={() => handleListItemClick('CVScanning')} // Handle Employees click
+                                >
+                                    <ListItemIcon>
+                                        {/* Add your employees icon here */}
+                                    </ListItemIcon>
+                                    <ListItemText primary="CV Scan" />
+                                </ListItemButton>
+                                <ListItemButton
+                                    component={Link}
+                                    to="/offDayConfirm" // Assuming path for EmployerList
+                                    selected={selectedComponent === 'OffDayConfirmation'}
+                                    onClick={() => handleListItemClick('OffDayConfirmation')} // Handle Employees click
+                                >
+                                    <ListItemIcon>
+                                        {/* Add your employees icon here */}
+                                    </ListItemIcon>
+                                    <ListItemText primary="Off-Day Approval" />
+                                </ListItemButton>
+                            </>
+                        )}
                         <ListItemButton
                             component={Link}
                             to="/login" // Assuming path for EmployerList
                             selected={selectedComponent === 'Logout'}
                             onClick={() => handleListItemClick('Logout')} // Handle Employees click
                         >
-                            <ListItemIcon>
-                                {/* Add your employees icon here */}
-                            </ListItemIcon>
                             <ListItemText primary="Logout" />
                         </ListItemButton>
                     </List>

@@ -21,8 +21,6 @@ genai.configure(api_key = os.environ['GOOGLE_API_KEY'])
 model = genai.GenerativeModel('gemini-pro')
 
 
-
-
 @api_view(['GET'])
 @csrf.csrf_exempt
 def employee_list(request):
@@ -97,13 +95,9 @@ def get_employee_off_day_requests(request, pk):
 @api_view(['GET'])
 def get_learning_data(request, pk):
     employee = Employee.objects.get(employee_id=pk)
-    print(employee)
-    ai_response = 10
     response = model.generate_content(f'Suggest learning material with links for an employee given that they work in {employee.department}. Return response in text format that separated with newLines. In the response dont use * character and list the datas with numbers and put newline character as \n if there is a new line ')
-    print(response.text)
     combined_data = {
         'learning_data': response.text
     }
-    # generate_answer(f'Suggest learning material for an employee given that they work in {employee.department}'))
     return Response(combined_data)
 

@@ -16,11 +16,10 @@ const CVScan = () => {
     const [candidates, setCandidates] = useState([]);
     const response = useRef([]);
 
-    useEffect(  () => {
+    useEffect(  async () => {
+        await handleInterviewDecision()
         let employerService = new EmployerService();
         employerService.getCvInfo().then((result) => setCandidates(result.data)).catch();
-        handleInterviewDecision()
-
     }, []);
 
     const handleInterviewDecision = async () => {
