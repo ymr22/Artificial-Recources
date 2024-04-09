@@ -48,7 +48,7 @@ def get_employee_off_day_requests(request, pk):
     employee = Employee.objects.get(employee_id=pk)
     requests = OffDayRequest.objects.filter(requested_by=employee)
 
-    used_days = 0
+    used_days = 12
     for request in requests:
         if request.approved is True:
             used_days += request.duration

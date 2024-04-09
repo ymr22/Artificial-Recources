@@ -14,16 +14,12 @@ def cv_model_predict(query):
     model = TextGenerationModel.from_pretrained("text-bison@001")
     model = model.get_tuned_model("projects/267233172569/locations/europe-west2/models/6937540139266605056")
 
-    response1 = model.predict(
+    response = model.predict(
         f""" {query} Is this applicant is suitable for the backend developer position?""",
         **parameters
     )
 
-    response2 = model.predict(
-        f""" {query} Is this applicant is suitable for the frontend developer position?""",
-        **parameters
-    )
-    return response1.text + "\n\n" + response2.text
+    return response.text
 
 
 def offDay_model_predict(query, used_off_days):
@@ -38,7 +34,7 @@ def offDay_model_predict(query, used_off_days):
     model = TextGenerationModel.from_pretrained("text-bison@001")
     model = model.get_tuned_model("projects/267233172569/locations/europe-west2/models/5338762271550078976")
     response = model.predict(
-        f"""Daha önce alınan izin gün sayısı:{used_off_days} , şu anki izin isteği:{query} , Yönetici izni: Gerekli""",
+        f"""Daha önce alınan izin gün sayısı:{used_off_days} , şu anki izin isteği:{21} , Yönetici izni: Gerekli""",
         **parameters
     )
     return response.text

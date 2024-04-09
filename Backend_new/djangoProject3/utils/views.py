@@ -34,10 +34,10 @@ def cv_info(request):
 
 @api_view(['GET'])
 def off_day(request):
-    employee = Employee.objects.get(employee_id=2)
+    employee = Employee.objects.get(employee_id=8)
     requests = OffDayRequest.objects.filter(requested_by=employee)
 
-    used_days = 0
+    used_days = 12
     for request in requests:
         if request.approved is True:
             used_days += request.duration
@@ -54,10 +54,10 @@ def off_day(request):
 
 @api_view(['GET'])
 def off_day_requests(request):
-    employee = Employee.objects.get(employee_id=2)
+    employee = Employee.objects.get(employee_id=8)
     requests = OffDayRequest.objects.filter(requested_by=employee)
 
-    used_days = 0
+    used_days = 12
     for request in requests:
         if request.approved is True:
             used_days += request.duration
