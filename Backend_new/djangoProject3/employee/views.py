@@ -28,12 +28,6 @@ def get_employee(request, pk):
     serializer = EmployeeSerializer(queryset, many=False)
     return Response(serializer.data)
 
-@api_view(['GET'])
-def get_learning_data(request, pk):
-    queryset = Employee.objects.get(employee_id=pk)
-    serializer = EmployeeSerializer(queryset, many=False)
-    return Response(serializer.data)
-
 
 @api_view(['POST'])
 def update_profile(request, pk):
