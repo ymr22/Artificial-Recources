@@ -7,46 +7,32 @@ import {
     Card,
     CardContent,
     Divider,
-    Link,
+    Link, TextField, ListItem,
 } from '@mui/material';
 import EmployerService from "../../services/EmployerService";
-
-const data = {
-    id: 1,
-    name: 'Çalışan 1',
-    role: 'Yazılım Geliştirici',
-    completedTasks: 6,
-    totalTasks: 12,
-    missingSkills: ['React JS', 'Node.js'],
-};
-
 const LearningMaterial = () => {
-    const [datas, setDatas] = useState(data);
+    const [arr, setArr] = useState("");
 
+    const data = [
+        "1. [Frontend Mentor](https://www.frontendmentor.io/): Interactive coding challenges to build real-world projects.",
+        "2. [freeCodeCamp](https://www.freecodecamp.org/learn/front-end-development/): Comprehensive curriculum covering HTML, CSS, JavaScript, and React.",
+        "3. [The Odin Project](https://www.theodinproject.com/courses/web-development-101): Project-based curriculum with hands-on exercises and expert guidance.",
+        "4. [Udemy](https://www.udemy.com/topic/front-end-development/): Short courses and tutorials on specific frontend technologies.",
+        "5. [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTML): Official documentation for web standards, including HTML, CSS, and JavaScript.",
+        "6. [Egghead](https://egghead.io/): Video lessons and tutorials on frontend development concepts.",
+        "7. [Codecademy](https://www.codecademy.com/catalog/language/front-end-development): Interactive coding exercises and projects to build your frontend skills.",
+        "8. [Scrimba](https://scrimba.com/learn/frontende): Interactive, project-based courses taught by experienced developers.",
+        "9. [Vue Mastery](https://vuemastery.com/courses/): Video courses and tutorials on the Vue.js framework.",
+        "10. [React Tutorial](https://reactjs.org/tutorial/tutorial.html): Official documentation and interactive tutorial for learning React.",
+        ]
     useEffect(() => {
         let employerService = new EmployerService();
-        employerService.getEmployeeLearningData(8).then((result) => setDatas(result.data)).catch();
-    }, []);
-
-    const getMissingSkills = () => {
-        const missingSkills = datas.missingSkills.map((skill) => (
-            <Card sx={{ mb: 2 }}>
-                <CardContent>
-                    <Typography variant="h6">{skill}</Typography>
-                    <Divider />
-                    <Box sx={{ mt: 2 }}>
-                        <Link href="#">
-                            <Typography variant="body2">Eğitim Videosu</Typography>
-                        </Link>
-                        <Link href="#">
-                            <Typography variant="body2">Sunum</Typography>
-                        </Link>
-                    </Box>
-                </CardContent>
-            </Card>
-        ));
-        return missingSkills;
-    };
+        employerService.getEmployeeLearningData(8).then((result) => setArr(result.data.learning_data)).catch();
+        employerService.getEmployeeLearningData(8).then((result) => console.log(result.data.learning_data)).catch();
+        const lines = arr.split(/(?<=\))\s\d+\. \[/);
+        setArr(lines.join('\n'));
+        console.log("new arr " + arr)
+        }, []);
 
     return (
         <div>
@@ -57,12 +43,16 @@ const LearningMaterial = () => {
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <Paper sx={{ p: 2 }}>
-                            <Typography variant="h5">
-                                Completed Tasks: {datas.completedTasks}/{datas.totalTasks}
-                            </Typography>
                             <Divider />
                             <Typography variant="h6" sx={{mt: 2}}>Missing Skills</Typography>
-                            {getMissingSkills()}
+                            <Typography>
+                                {data.map((d) => (
+                                    <ListItem>
+                                        {d}
+                                    </ListItem>
+
+                                ))}
+                            </Typography>
                         </Paper>
                     </Grid>
                 </Grid>
