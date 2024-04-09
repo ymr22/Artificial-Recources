@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
     Box,
     Typography,
@@ -14,20 +14,20 @@ import EmployerService from "../../services/EmployerService";
 
 const CVScan = () => {
     const [candidates, setCandidates] = useState([]);
-    const [response, setResponse] = useState("");
+    const response = useRef([]);
 
     useEffect(  () => {
         let employerService = new EmployerService();
-        employerService.getCvInfo(2).then((result) => setCandidates(result.data)).catch();
-        employerService.getCvInfo(2).then((result) => console.log(result.data)).catch();
+        employerService.getCvInfo().then((result) => setCandidates(result.data)).catch();
         handleInterviewDecision()
 
     }, []);
 
     const handleInterviewDecision = async () => {
         const data = await axios.get("http://localhost:8000//utils/cvscan/")
-        setResponse(data.data);
-        console.log(response)
+        response.current = data.data
+        console.log(response.current[0])
+        console.log("data is: "  + data.data[0] + "\n\n" + data.data[1])
     };
 
     return (
@@ -38,8 +38,8 @@ const CVScan = () => {
 
             <Box sx={{ p: 2, marginLeft: 40 }}>
                 <Paper>
-                    {candidates.map((candidate) => (
-                        <Accordion key={candidate.id}  sx={{ mt: 3 }}>
+                    {candidates.map((candidate, index) => (
+                        <Accordion key={index} sx={{ mt: 3 }}>
                             <AccordionSummary>
                                 <Grid sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                                     <Typography variant="h6">{candidate.name + " " + candidate.surname}</Typography>
@@ -53,7 +53,7 @@ const CVScan = () => {
                                 <Typography sx={{ lineHeight: 3 }}>Deneyimler: {candidate.experience}</Typography>
                                 <Typography sx={{ lineHeight: 3 }}>Projeler: {candidate.projects}</Typography>
                                 <Typography sx={{ lineHeight: 3 }}>İlgi Alanları: {candidate.interests}</Typography>
-                                <Typography sx={{ lineHeight: 2 }}>AI Yorumu: {response}</Typography>
+                                <Typography sx={{ lineHeight: 2 }}>AI Yorumu: {response.current[index]}</Typography>
                             </AccordionDetails>
                         </Accordion>
                     ))}

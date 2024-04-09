@@ -13,6 +13,10 @@ export default class EmployerService {
     return axios.get("http://localhost:8000/employee/dashboard/"+id)
   }
 
+  getEmployeeLearningData(id) {
+    return axios.get("http://localhost:8000/employee/learning/"+id)
+  }
+
   getEmployerOffDayById(id) {
     return axios.get("http://localhost:8000/employee/dayoff/"+id)
   }

@@ -38,6 +38,7 @@ export default function OffDay() {
 
     return (
         <div>
+            <form>
             <Typography variant="h4" component="h2" sx={{p: 3, marginLeft: 30}}>
                 Off-Day Request:
             </Typography>
@@ -90,6 +91,7 @@ export default function OffDay() {
                     </Grid>
                 </Box>
             </TableContainer>
+            </form>
         </div>
     );
 }

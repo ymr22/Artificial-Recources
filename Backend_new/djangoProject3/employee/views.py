@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.views.decorators import csrf
@@ -5,6 +6,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from utils.models import Message, OffDayRequest
+
+from .forms import EmployeeForm
 from .serializers import EmployeeSerializer
 from utils.serializers import MessageSerializer, OffDayRequestSerializer
 from .models import Employee
@@ -25,6 +28,24 @@ def get_employee(request, pk):
     serializer = EmployeeSerializer(queryset, many=False)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def get_learning_data(request, pk):
+    queryset = Employee.objects.get(employee_id=pk)
+    serializer = EmployeeSerializer(queryset, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def update_profile(request, pk):
+    employee = Employee.objects.get(pk=pk)
+    form = EmployeeForm(data=request.POST, instance=employee)
+
+    if form.is_valid():
+        form.save()
+        return Response(form.as_p, status=status.HTTP_200_OK)
+    else:
+        form = EmployeeForm()
+        return Response(form.as_p, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def dash_employee(request, pk):

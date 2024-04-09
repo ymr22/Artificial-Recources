@@ -9,6 +9,7 @@ import {
     Divider,
     Link,
 } from '@mui/material';
+import EmployerService from "../../services/EmployerService";
 
 const data = {
     id: 1,
@@ -20,14 +21,15 @@ const data = {
 };
 
 const LearningMaterial = () => {
-    const [user] = useState(data);
+    const [datas, setDatas] = useState(data);
 
     useEffect(() => {
-        // Gerçek API'den kullanıcı ve tamamlanmış görev verilerini alın (burada örnek veriler kullanılıyor)
+        let employerService = new EmployerService();
+        employerService.getEmployeeLearningData(8).then((result) => setDatas(result.data)).catch();
     }, []);
 
     const getMissingSkills = () => {
-        const missingSkills = user.missingSkills.map((skill) => (
+        const missingSkills = datas.missingSkills.map((skill) => (
             <Card sx={{ mb: 2 }}>
                 <CardContent>
                     <Typography variant="h6">{skill}</Typography>
@@ -56,7 +58,7 @@ const LearningMaterial = () => {
                     <Grid item xs={12}>
                         <Paper sx={{ p: 2 }}>
                             <Typography variant="h5">
-                                Completed Tasks: {user.completedTasks}/{user.totalTasks}
+                                Completed Tasks: {datas.completedTasks}/{datas.totalTasks}
                             </Typography>
                             <Divider />
                             <Typography variant="h6" sx={{mt: 2}}>Missing Skills</Typography>

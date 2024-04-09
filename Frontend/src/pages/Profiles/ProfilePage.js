@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Container, Typography, TextField, Button, Avatar, Grid, Box } from '@mui/material';
 import EmployerService from "../../services/EmployerService";
+import axios from "axios";
 
 const ProfilePage = () => {
     const [user, setUser] = useState([]);
@@ -13,6 +14,39 @@ const ProfilePage = () => {
 
     const handleChange = (prop) => (event) => {
         setUser({ ...user, [prop]: event.target.value });
+    };
+
+
+    const handleSubmit = async (event) => {
+        const data = {
+            data: {
+                department: user.department,
+                email: user.email,
+                employee_id: user.employee_id,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                phone: user.phone,
+                work_duration: user.work_duration
+            }
+        }
+        console.log(data)
+        event.preventDefault();
+
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+
+        try {
+            const response = await axios.post(
+                'http://localhost:8000/employee/update-profile/8', data, { headers }
+            );
+            console.log('Response from backend:', response);
+
+            alert('Başvurunuz başarıyla gönderildi!');
+        } catch (error) {
+            console.error('Error sending data:', error);
+            alert('Başvuru gönderilirken bir hata oluştu!');
+        }
     };
 
     return (
@@ -64,6 +98,7 @@ const ProfilePage = () => {
                             variant="contained"
                             color="secondary"
                             sx={{ mt: 3, mb: 2, py: 1.5, fontSize: '1rem' }}
+                            onClick={handleSubmit}
                         >
                             Bilgileri Güncelle
                         </Button>

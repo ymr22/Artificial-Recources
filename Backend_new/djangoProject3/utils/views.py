@@ -1,3 +1,5 @@
+import json
+
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.shortcuts import render
@@ -16,13 +18,17 @@ from rest_framework.response import Response
 
 @api_view(['GET'])
 def cv_scan(request):
-    requests = CVInfo.objects.get(id=1)
+    requests = CVInfo.objects.all()
 
-    serializer = CVSerializer(requests, many=False)
+    serializer = CVSerializer(requests, many=True)
 
     combined_data = serializer.data
 
-    ai_response = cv_model_predict(combined_data)
+    ai_response = []
+
+    for data in combined_data:
+        response = cv_model_predict(data)
+        ai_response.append(response)
     print(ai_response)
     return Response(ai_response)
 
