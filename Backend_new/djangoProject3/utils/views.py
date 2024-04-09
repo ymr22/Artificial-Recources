@@ -12,7 +12,7 @@ from rest_framework.permissions import AllowAny
 
 from .models import CVInfo, OffDayRequest
 from .serializers import CVSerializer, OffDayRequestSerializer
-from vertex_ai.app import cv_model_predict, offDay_model_predict
+from vertex_ai.app import cv_model_predict, offDay_model_predict, calendar_predict
 from rest_framework.response import Response
 from ai.app import generate_answer
 
@@ -93,3 +93,8 @@ def cv_commit(request):
 def get_csrf_token(request):
     csrf_token = get_token(request)
     return JsonResponse({'csrf_token': csrf_token})
+
+@api_view(['GET'])
+def off_day(request):
+    ai_response = calendar_predict()
+    return Response(ai_response)
