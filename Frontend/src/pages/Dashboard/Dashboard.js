@@ -19,6 +19,7 @@ import styled from 'styled-components';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import Logo from '../../TOBB_ETÜ_logo.png';
+import MyLogo  from '../../Avatar.jpg';
 import EmployerService from "../../services/EmployerService";
 
 const CardContainer = styled(Card)`
@@ -57,10 +58,10 @@ const Dashboard = () => {
 
   let employerService = new EmployerService();
   useEffect(() => {
-    employerService.getEmployerDashboard(2).then((result) => console.log(result.data)).catch();
-    employerService.getEmployerDashboard(2).then((result) => setUser(result.data.employee)).catch();
-    employerService.getEmployerDashboard(2).then((result) => setTeam(result.data.team_members)).catch();
-    employerService.getEmployerDashboard(2).then((result) => setMessages(result.data.messages)).catch();
+    employerService.getEmployerDashboard(8).then((result) => console.log(result.data)).catch();
+    employerService.getEmployerDashboard(8).then((result) => setUser(result.data.employee)).catch();
+    employerService.getEmployerDashboard(8).then((result) => setTeam(result.data.team_members)).catch();
+    employerService.getEmployerDashboard(8).then((result) => setMessages(result.data.messages)).catch();
   }, []);
 
   const [company, setCompany] = useState({
@@ -73,13 +74,17 @@ const Dashboard = () => {
   return (
       <Box sx={{mt: 5, marginLeft: 35}}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={3.5}>
             <CardContainer>
               <CardContent>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                  <img src={MyLogo} alt="company logo" width="140" height="140"/>
                   <Typography variant="h6">{user.first_name}</Typography>
                   <Typography variant="body1">{user.email}</Typography>
-                  <Typography variant="body1">{user.department}</Typography>
+                  <Typography variant="body1">
+                    {user.department && user.department.charAt(0).toUpperCase() + user.department.slice(1)}
+                  </Typography>
+
                 </Box>
               </CardContent>
             </CardContainer>
@@ -89,7 +94,7 @@ const Dashboard = () => {
               <CardContent>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <img src={company.logo} alt="company logo" width="135" height="100" />
-                  <Typography variant="body1" sx={{lineHeight:3, alignItems: 'center'}}>{company.name}</Typography>
+                  <Typography variant="body1" sx={{lineHeight:3, alignItems: 'center', md:1}}>{company.name}</Typography>
                   <LinkStyled href={company.website} target="_blank">
                     {company.website}
                   </LinkStyled>
@@ -102,7 +107,7 @@ const Dashboard = () => {
               <CardContent>
                 <Typography variant="h6">Ekibim</Typography>
                 <Divider />
-                <ListContainer  sx={{lineHeight:3}} >
+                <ListContainer  sx={{lineHeight:4, height:187}} >
                   {team.map((member) => (
                       <ListItemStyled key={member.first_name}>
                         <Typography variant="body1">{member.first_name + " " + member.last_name + "-->"}</Typography>
