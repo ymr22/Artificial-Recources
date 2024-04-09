@@ -12,6 +12,7 @@ from .serializers import EmployeeSerializer
 from utils.serializers import MessageSerializer, OffDayRequestSerializer
 from .models import Employee
 from ai.app import generate_answer as ai_query
+from ai.app import generate_answer
 
 
 @api_view(['GET'])
@@ -82,4 +83,12 @@ def get_employee_off_day_requests(request, pk):
     }
 
     return Response(combined_data)
+
+
+
+@api_view(['GET'])
+def get_learning_data(request, pk):
+    employee = Employee.objects.get(employee_id=pk)
+    ai_response = generate_answer(f'Suggest learning material for an employee given that they work in {employee.department}')
+    return Response(ai_response)
 

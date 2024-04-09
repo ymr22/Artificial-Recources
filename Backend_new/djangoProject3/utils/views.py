@@ -93,10 +93,3 @@ def cv_commit(request):
 def get_csrf_token(request):
     csrf_token = get_token(request)
     return JsonResponse({'csrf_token': csrf_token})
-
-
-@api_view(['GET'])
-def get_learning_data(request):
-    ai_response = generate_answer(request.data)
-    return Response(ai_response)
-

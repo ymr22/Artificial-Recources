@@ -8,6 +8,5 @@ urlpatterns = [
     path('offday/', views.off_day, name='off_day'),
     path('offdayreq/', views.off_day_requests, name='off_day_requests'),
     path('csrftoken/', views.get_csrf_token, name='csrf'),
-    path('learning/', views.get_learning_data, name='learning_data'),
 
 ]
