@@ -15,14 +15,16 @@ export default function OffDay() {
     const [employee, setEmployee] = useState([]);
     const [selectedUser, setSelectedUser] = useState('');
     const [requestedDays, setRequestedDays] = useState('');
+    const [remainedDays, setRemainedDays] = useState(0);
     const [requestedDayReason, setRequestedDayReason] = useState("");
     const [permissionStatus, setPermissionStatus] = useState("");
 
     useEffect(() => {
         let employerService = new EmployerService();
-        console.log(employerService.getEmployerOffDayById(2))
-        employerService.getEmployerOffDayById(2).then((result) => setEmployee(result.data)).catch();
-
+        console.log(employerService.getEmployerOffDayById(8))
+        employerService.getEmployerOffDayById(8).then((result) => setEmployee(result.data)).catch();
+        employerService.getEmployerOffDayById(8).then((result) => setRemainedDays(result.data.current_request.allowed_off_days- result.data.used_off_days)).catch();
+        console.log(remainedDays)
     }, []);
 
     const handleRequestPermission = async () => {
@@ -43,7 +45,7 @@ export default function OffDay() {
             <Box sx={{ p: 2, mb: 2, width: 400}}>
                     <Grid container spacing={3} sx={{ p: 2, mb: 2, width: 600}}>
                         <Typography variant="h5">
-                            Kalan İzin Sayısı : {employee.current_request - employee.used_off_days}
+                            Kalan İzin Sayısı : {remainedDays}
                         </Typography>
                     </Grid>
                     <Grid container spacing={3} sx={{ p: 2, mb: 2, width: 600}}>

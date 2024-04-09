@@ -7,8 +7,8 @@ const ProfilePage = () => {
 
     useEffect(() => {
         let employerService = new EmployerService();
-        console.log(employerService.getEmployerById(2))
-        employerService.getEmployerById(2).then((result) => setUser(result.data)).catch();
+        console.log(employerService.getEmployerById(8))
+        employerService.getEmployerById(8).then((result) => setUser(result.data)).catch();
     }, []);
 
     const handleChange = (prop) => (event) => {

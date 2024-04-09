@@ -46,6 +46,7 @@ export default function ApproveOffDayRequests() {
     const [requests, setRequests] = useState([]);
     const [used_days, setUsedDays] = useState();
     const [employee, setEmployee] = useState([]);
+    const [remainedDays, setRemainedDays] = useState(0);
     const [permissionStatusUpdates, setPermissionStatusUpdates] = useState([]);
     const selectedActionRef = useRef('');
     const [permissionStatus, setPermissionStatus] = useState("");
@@ -56,8 +57,9 @@ export default function ApproveOffDayRequests() {
         employerService.getOffDayReq().then((result) => console.log(result.data)).catch();
         employerService.getOffDayReq().then((result) => setRequests(result.data.current_request)).catch();
         employerService.getOffDayReq().then((result) => setUsedDays(result.data.used_off_days)).catch();
-        employerService.getEmployerById(2).then((result) => setEmployee(result.data)).catch();
-        employerService.getEmployerById(2).then((result) => console.log(result.data)).catch();
+        employerService.getEmployerOffDayById(8).then((result) => setRemainedDays(result.data.current_request.allowed_off_days- result.data.used_off_days)).catch();
+        employerService.getEmployerById(8).then((result) => setEmployee(result.data)).catch();
+        employerService.getEmployerById(8).then((result) => console.log(result.data)).catch();
         const response = await axios.get("http://localhost:8000//utils/offday/");
         console.log(response)
         setPermissionStatus(response.data)
@@ -94,8 +96,8 @@ export default function ApproveOffDayRequests() {
                         </TableHead>
                         <TableBody>
                             <TableRow key={requests.id}>
-                                <TableCell>{employee.name + " " +  employee.surname}</TableCell>
-                                <TableCell>{requests.allowed_off_days}</TableCell>
+                                <TableCell>{employee.first_name + " " +  employee.last_name}</TableCell>
+                                <TableCell>{remainedDays}</TableCell>
                                 <TableCell>{used_days}</TableCell>
                                 <TableCell>{requests.duration}</TableCell>
                                 <TableCell>{requests.reason}</TableCell>

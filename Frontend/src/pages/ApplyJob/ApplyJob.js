@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     Typography,
@@ -14,9 +14,6 @@ import {
 } from '@mui/material';
 import './ApplyForm.css';
 import axios from "axios";
-import EmployerService from "../../services/EmployerService";
-import Cookies from 'js-cookie';
-
 const ApplyJob = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -32,88 +29,32 @@ const ApplyJob = () => {
         interests: [],
     });
 
-    const [candidates, setCandidates] = useState([]);
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-// All form data is already in formData
-        const data = [
-            {
-            "id": 1,
-            "name": "elif",
-            "surname": "bakır",
-            "email": "ebakir@gmail.com",
-            "telephone": "05055555555",
-            "birth_date": "1990-03-28",
-            "previous_jobs": [
-                "Backend engineer"
-            ],
-            "education": [
-                "Bachelors degree"
-            ],
-            "experience": [
-                "experience"
-            ],
-            "skills": [
-                "java",
-                "python"
-            ],
-            "projects": [
-                "project"
-            ],
-            "interests": [
-                "backend"
-            ],
-            "is_deleted":false
-        }
-        ]
-        console.log(data)
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
         const headers = {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
         };
 
         try {
-            // Replace with your backend API endpoint URL
-            const response = await axios.post('http://localhost:8000//utils/cvcommit/', JSON.stringify(data), { headers });
+            const response = await axios.post(
+                'http://localhost:8000/utils/cvcommit/', formData, { headers }
+            );
             console.log('Response from backend:', response);
 
-            // Handle successful response (e.g., show success message)
             alert('Başvurunuz başarıyla gönderildi!');
         } catch (error) {
             console.error('Error sending data:', error);
-
-            // Handle errors (e.g., show error message)
             alert('Başvuru gönderilirken bir hata oluştu!');
         }
     };
 
-    useEffect(  () => {
-        let employerService = new EmployerService();
-        employerService.getCvInfo(2).then((result) => setCandidates(result.data)).catch();
-        handlePost()
-    }, []);
 
-    const handlePost = async () => {
-
-        const response = await fetch('http://localhost:8000/utils/cvcommit/', {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': Cookies.get('X-CSRFToken')
-            }
-        }).then(response => {
-            // Handle response
-        }).catch(error => {
-            console.log(error)
-        });
-        const result = await response.json();
-        console.log("----------" + result);
-    }
     const addEducation = () => {
         setFormData({
             ...formData,
@@ -341,17 +282,17 @@ const ApplyJob = () => {
                         <Box sx={{ mt: 3, lineHeight:3 }}>
                             <Typography variant="h6">Deneyimler</Typography>
                             <Divider />
-                            {formData.previousJobs.map((experience) => (
+                            {formData.experience.map((experience) => (
                                 <Box key={experience.id} sx={{display: 'flex', flexWrap: 'wrap', justifyContent:'flex-start', gap: '30px'}}>
                                     <TextField
                                         label="Deneyim Başlığı"
-                                        value={formData.previousJobs.title}
+                                        value={formData.experience.title}
                                         onChange={handleInputChange}
                                         margin="normal"
                                     />
                                     <TextField
                                         label="Deneyim Açıklaması"
-                                        value={formData.previousJobs.description}
+                                        value={formData.experience.description}
                                         onChange={handleInputChange}
                                         margin="normal"
                                         multiline
@@ -368,17 +309,19 @@ const ApplyJob = () => {
                         <Box sx={{ mt: 3, lineHeight:3 }}>
                             <Typography variant="h6">Yetenekler</Typography>
                             <Divider />
-                                <Box key={2} sx={{display: 'flex', flexWrap: 'wrap', justifyContent:'flex-start', gap: '30px'}}>
-                                    <TextField
-                                        label="Yetenek"
-                                        value={formData.skills}
-                                        onChange={(e) => handleInputChange({ target: { name: 'skills', value: e.target.value} })}
-                                        margin="normal"
-                                    />
-                                    <Button variant="outlined" color="error" size="small" onClick={() => removeSkill(0)}>
-                                        Sil
-                                    </Button>
-                                </Box>
+                            {formData.skills.map((skill) => (
+                            <Box key={skill.id} sx={{display: 'flex', flexWrap: 'wrap', justifyContent:'flex-start', gap: '30px'}}>
+                                <TextField
+                                    label="Yetenek"
+                                    value={formData.skills.id}
+                                    onChange={handleInputChange}
+                                    margin="normal"
+                                />
+                                <Button variant="outlined" color="error" size="small" onClick={() => removeSkill(skill.id)}>
+                                    Sil
+                                </Button>
+                            </Box>
+                            ))}
                             <Button variant="outlined" onClick={addSkill}>Yetenek Ekle</Button>
                         </Box>
 
@@ -418,22 +361,24 @@ const ApplyJob = () => {
                         <Box sx={{ mt: 3 , lineHeight:3}}>
                             <Typography variant="h6">İlgi Alanları</Typography>
                             <Divider />
-                                <Box key={3} sx={{display: 'flex', flexWrap: 'wrap', justifyContent:'flex-start', gap: '30px'}}>
-                                    <TextField
-                                        label="İlgi Alanı"
-                                        value={formData.interests}
-                                        onChange={(e) => handleInputChange({ target: { name: 'interests', value: e.target.value} })}
-                                        margin="normal"
-                                    />
-                                    <Button variant="outlined" color="error" size="small" onClick={() => removeInterest(0)}>
-                                        Sil
-                                    </Button>
-                                </Box>
+                            {formData.interests.map((interest) => (
+                            <Box key={interest.id} sx={{display: 'flex', flexWrap: 'wrap', justifyContent:'flex-start', gap: '30px'}}>
+                                <TextField
+                                    label="İlgi Alanı"
+                                    value={formData.interests.id}
+                                    onChange={handleInputChange}
+                                    margin="normal"
+                                />
+                                <Button variant="outlined" color="error" size="small" onClick={() => removeInterest(interest.id)}>
+                                    Sil
+                                </Button>
+                            </Box>
+                            ))}
                             <Button variant="outlined" onClick={addInterest}>İlgi Alanı Ekle</Button>
                         </Box>
 
                         <Box sx={{ mt: 3 }}>
-                            <Button variant="contained" type="submit" className="button" onClick={handleSubmit}>Başvur</Button>
+                            <Button variant="contained" type="submit" className="button">Başvur</Button>
                         </Box>
                     </form>
                 </Box>

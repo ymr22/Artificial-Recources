@@ -1,6 +1,5 @@
 import { Button, Typography, Container, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import Logo from "../components/Logo";
 //////////////////////////////////////
 
 const Home = ({ setAuth }) => {
@@ -17,9 +16,6 @@ const Home = ({ setAuth }) => {
         height: "100vh",
       }}
     >
-      <Box sx={{ mb: 5, mt: -10 }}>
-        <Logo />
-      </Box>
       <Typography
         sx={{
           textAlign: "center",

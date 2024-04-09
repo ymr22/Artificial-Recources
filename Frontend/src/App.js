@@ -3,7 +3,6 @@ import { CssBaseline } from "@mui/material";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import NextPage from "./pages/Dashboard/Dashboard";
 import EmployerList from "./pages/Employers/EmployerList";
 import MyDrawer from "./layouts/MyDrawer";
 import ProfilePage from "./pages/Profiles/ProfilePage";
@@ -31,7 +30,7 @@ function App() {
               <div>
                   <ApplyJob/>
               </div>} />
-          <Route path="/login" element={<Login setAuth={setAuth}/>}/>
+          <Route path="/login" element={<Login/>}/>
           <Route path="/dashboard" element={
               <div>
                   <MyDrawer/>
