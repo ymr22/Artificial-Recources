@@ -13,6 +13,7 @@ class Employee(models.Model):
     department = models.CharField(choices=DEPARTMENT_CHOICES)
     work_duration = models.IntegerField(null=True, blank=True)
     phone = models.CharField(null=True, blank=True)
+    is_supervisor = models.BooleanField(default=False)
     # title = models.CharField(choices=TITLES, null=True, blank=True)
 
     def __str__(self):
