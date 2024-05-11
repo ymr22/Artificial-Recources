@@ -1,6 +1,4 @@
-# Bil 496 Project
-
-## Artificial Recources
+# Artificial Recources
 Bu proje, modern ve verimli bir insan kaynakları yönetim sistemini sağlayan yapay zeka tabanlı bir uygulamadır. Proje, çalışanlarınızı etkili bir şekilde yönetmek, işe alım süreçlerini optimize etmek ve performansı izlemek için tasarlanmıştır.
 
 ### Group Name: 
